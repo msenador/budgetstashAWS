@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-// import AWS from 'aws-sdk';
+import React, { useState, useContext, useEffect } from 'react';
 import { Box } from '@mui/system';
 import styled from 'styled-components';
 import { TextField, Button } from '@mui/material';
+import UserContext from '../context/UserContext';
 
 const BoxStyled = styled(Box)`
   display: flex;
@@ -29,6 +29,8 @@ const Home = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [notification, setNotification] = useState('');
 
+  const { currentUser, logoutUser, loginUser } = useContext(UserContext);
+
   const submitRegistration = async () => {
     const requestBody = {
       email: email,
@@ -39,7 +41,6 @@ const Home = () => {
 
     fetch('https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/register', {
       method: 'POST',
-      // mode: 'no-cors',
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': 'O7a8DXIjpl5e2hWDOt9jQ32PU2ve37G1aLWQvzvB'
@@ -70,9 +71,14 @@ const Home = () => {
       });
   };
 
+  useEffect(() => {
+    console.log('USER: ', currentUser);
+  }, [currentUser]);
+
   return (
     <Box>
       <BoxStyled>
+        {currentUser ? <h1>Welcome {currentUser.username}!!</h1> : <h1>Please sign in</h1>}
         <h1>Register</h1>
         <PrimaryBorderTextField
           id="username"
@@ -107,6 +113,12 @@ const Home = () => {
         {notification && <Box>{notification}</Box>}
         <Button variant="contained" color="primary" onClick={submitRegistration}>
           Register
+        </Button>
+        <Button variant="contained" color="primary" onClick={loginUser}>
+          Sign In
+        </Button>
+        <Button variant="contained" color="primary" onClick={logoutUser}>
+          Sign Out
         </Button>
       </BoxStyled>
     </Box>
