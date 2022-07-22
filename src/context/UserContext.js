@@ -22,12 +22,16 @@ export const UserProvider = ({ children }) => {
               totalSpent: '300.00'
             },
             {
-              itemName: 'shirt',
-              itemPrice: '10.99'
-            },
-            {
-              itemName: 'bag',
-              itemPrice: '212.99'
+              items: [
+                {
+                  name: 'shirt',
+                  price: '10.99'
+                },
+                {
+                  name: 'bag',
+                  price: '212.99'
+                }
+              ]
             }
           ]
         },
@@ -37,12 +41,16 @@ export const UserProvider = ({ children }) => {
               totalSpent: '330.00'
             },
             {
-              itemName: 'mortgage',
-              itemPrice: '100.99'
-            },
-            {
-              itemName: 'car',
-              itemPrice: '22.99'
+              items: [
+                {
+                  name: 'mortgage',
+                  price: '100.99'
+                },
+                {
+                  name: 'car',
+                  price: '22.99'
+                }
+              ]
             }
           ]
         }

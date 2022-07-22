@@ -81,7 +81,7 @@ const userExists = async (email) => {
 };
 
 const addUser = async (username, email, password) => {
-  const encryptedPW = bcrypt.hashSync(password.trim(), 10);
+  const encryptedPW = bcrypt.hashSync(password, 10);
 
   const user = {
     username: username,
