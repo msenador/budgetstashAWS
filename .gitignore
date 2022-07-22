@@ -23,5 +23,8 @@ yarn-debug.log*
 yarn-error.log*
 
 #aws
-/aws/node_modules
+/aws/login-lambda/node_modules
+/aws/login-lambda/*.zip
+/aws/register-lambda/node_modules
+/aws/register-lambda/*.zip
 
