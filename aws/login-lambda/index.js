@@ -1,77 +1,36 @@
 const AWS = require('aws-sdk');
-const bcrypt = require('bcryptjs');
 
 AWS.config.update({
   region: process.env.AWS_MY_REGION
 });
 
-var dynamoDB = new AWS.DynamoDB({ apiVersion: '2012-08-10' });
 const dynamoDBtable = process.env.DYNAMODB_TABLE;
+const docClient = new AWS.DynamoDB.DocumentClient();
 
-exports.handler = async (event) => {
-  const body = JSON.parse(event.body);
+exports.handler = async () => {
+  const params = {
+    TableName: dynamoDBtable
+  };
 
-  if (missingInputs(body.email, body.password) === true) {
-    return {
-      statusCode: 400,
-      headers: {
-        'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-        'Access-Control-Allow-Credentials': true // Required for cookies, authorization headers with HTTPS
-      },
-      body: JSON.stringify(`All fields are required`)
-    };
-  }
+  const scanResults = [];
+  const items = {};
+  do {
+    const items = await docClient.scan(params).promise();
+    items.Items.forEach((item) => scanResults.push(item));
+    params.ExclusiveStartKey = items.LastEvaluatedKey;
+  } while (typeof items.LastEvaluatedKey !== 'undefined');
 
-  return getUser(body.email, body.password);
-};
+  console.log('SCAN: ', scanResults);
 
-const missingInputs = (email, password) => {
-  if (!email || !password) {
-    return true;
-  }
-};
+  const response = {
+    statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+    },
+    body: JSON.stringify(scanResults)
+  };
 
-const getUser = async (email, password) => {
-  try {
-    const params = {
-      Key: {
-        email: { S: email }
-      },
-      TableName: dynamoDBtable
-    };
-
-    const result = await dynamoDB.getItem(params).promise();
-
-    if (result.Item.email.S === email && bcrypt.compareSync(password, result.Item.password.S)) {
-      console.log('FOUND user:');
-      return {
-        statusCode: 200,
-        headers: {
-          'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-          'Access-Control-Allow-Credentials': true // Required for cookies, authorization headers with HTTPS
-        },
-        body: JSON.stringify(result)
-      };
-    } else {
-      return {
-        statusCode: 404,
-        headers: {
-          'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-          'Access-Control-Allow-Credentials': true // Required for cookies, authorization headers with HTTPS
-        },
-        body: JSON.stringify(`Email or password is incorrect`)
-      };
-    }
-  } catch (error) {
-    if (error) {
-      return {
-        statusCode: 404,
-        headers: {
-          'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-          'Access-Control-Allow-Credentials': true // Required for cookies, authorization headers with HTTPS
-        },
-        body: JSON.stringify(`Email or password is incorrect`)
-      };
-    }
-  }
+  return response;
 };
