@@ -47,7 +47,7 @@ const Register = () => {
   const { currentUser } = useContext(UserContext);
   const { spinnerModal, setSpinnerModal } = useContext(SpinnerModalContext);
 
-  const submitRegistration = async () => {
+  const submitRegistration = () => {
     setSpinnerModal(true);
     const requestBody = {
       email: email,
@@ -131,8 +131,10 @@ const Register = () => {
       <Modal
         ariaHideApp={false}
         isOpen={spinnerModal}
-        onRequestClose={() => setSpinnerModal(false)}
-        style={spinnerCustomStyles}>
+        // onRequestClose={() => setSpinnerModal(false)}
+        // eslint-disable-next-line prettier/prettier
+        style={spinnerCustomStyles}
+      >
         <PulseLoader color={MAIN_BLUE} />
       </Modal>
     </Box>

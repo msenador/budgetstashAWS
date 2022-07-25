@@ -111,7 +111,6 @@ const Login = () => {
     <Box>
       <BoxStyled>
         <h1>Login</h1>
-        {/* {loading && <PulseLoader color="gray" />} */}
         {currentUser ? <h1>Welcome {currentUser.username}</h1> : <h1>No USER</h1>}
         <PrimaryBorderTextField
           id="email"
@@ -137,7 +136,9 @@ const Login = () => {
         ariaHideApp={false}
         isOpen={spinnerModal}
         onRequestClose={() => setSpinnerModal(false)}
-        style={spinnerCustomStyles}>
+        // eslint-disable-next-line prettier/prettier
+        style={spinnerCustomStyles}
+      >
         <PulseLoader color={MAIN_BLUE} />
       </Modal>
     </Box>
