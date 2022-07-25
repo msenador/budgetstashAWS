@@ -1,4 +1,5 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
+import bcrypt from 'bcryptjs';
 import styled from 'styled-components';
 import { Box } from '@mui/system';
 import { TextField, Button } from '@mui/material';
@@ -29,28 +30,58 @@ const Login = () => {
 
   const { setCurrentUser, currentUser } = useContext(UserContext);
 
+  const missingInputs = (email, password) => {
+    if (!email || !password) {
+      setNotification('All fields required');
+      return true;
+    }
+  };
+
+  const userDoesNotExist = (user) => {
+    if (!user) {
+      setNotification('User does not exist.');
+      setCurrentUser([]);
+      return true;
+    }
+  };
+
+  const userValid = (inputPassword, dbEncryptedPW, user) => {
+    if (bcrypt.compareSync(inputPassword, dbEncryptedPW)) {
+      setCurrentUser(user[0]);
+      setNotification('Logged in');
+      return true;
+    }
+  };
+
+  const incorrectCredentials = () => {
+    setCurrentUser([]);
+    setNotification('Email or password is incorrect');
+  };
+
   const handleLogin = async () => {
+    if (missingInputs(email, password)) {
+      return;
+    }
+
     try {
       const res = await fetch('https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/login', {
-        'Content-Type': 'application/json',
-        'x-api-key': '3LvSDGxwh95e4vtIu61Xi4uY94wnM0kj9CvuRslE'
+        'Content-Type': 'application/json'
+        // 'x-api-key': '3LvSDGxwh95e4vtIu61Xi4uY94wnM0kj9CvuRslE' // NOT WORKING
       });
       const data = await res.json();
-      setNotification('git');
-      console.log('DTA: ', data);
-      const getUser = data.filter((user) => user.email === email);
+      const user = data.filter((user) => user.email === email);
 
-      setCurrentUser(getUser[0]);
+      if (userDoesNotExist(user[0])) {
+        return;
+      } else if (userValid(password, user[0].password, user)) {
+        return;
+      } else {
+        incorrectCredentials();
+      }
     } catch (err) {
       console.log(err);
     }
   };
-
-  useEffect(() => {
-    if (currentUser === undefined) {
-      setNotification('Email or password is incorrect');
-    }
-  }, [currentUser]);
 
   return (
     <Box>

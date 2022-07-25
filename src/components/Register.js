@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Box } from '@mui/system';
 import styled from 'styled-components';
 import { TextField, Button } from '@mui/material';
@@ -29,7 +29,7 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [notification, setNotification] = useState('');
 
-  const { currentUser, logoutUser, loginUser } = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
 
   const submitRegistration = async () => {
     const requestBody = {
@@ -50,7 +50,7 @@ const Register = () => {
       .then((response) => {
         switch (response.status) {
           case 400:
-            setNotification('Invalid inputs.');
+            setNotification('All fields required.');
             break;
           case 402:
             setNotification('Passwords do not match');
@@ -64,16 +64,11 @@ const Register = () => {
           default:
             setNotification('Registration');
         }
-        console.log(response);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  useEffect(() => {
-    console.log('USER: ', currentUser);
-  }, [currentUser]);
 
   return (
     <Box>
@@ -113,12 +108,6 @@ const Register = () => {
         {notification && <Box>{notification}</Box>}
         <Button variant="contained" color="primary" onClick={submitRegistration}>
           Register
-        </Button>
-        <Button variant="contained" color="primary" onClick={loginUser}>
-          Sign In
-        </Button>
-        <Button variant="contained" color="primary" onClick={logoutUser}>
-          Sign Out
         </Button>
       </BoxStyled>
     </Box>
