@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { Box } from '@mui/system';
 import styled from 'styled-components';
 import { TextField, Button } from '@mui/material';
-import UserContext from '../context/UserContext';
 import { PulseLoader } from 'react-spinners';
 import Modal from 'react-modal';
 import SpinnerModalContext from '../context/SpinnerModalContext';
@@ -44,7 +43,6 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [notification, setNotification] = useState('');
 
-  const { currentUser } = useContext(UserContext);
   const { spinnerModal, setSpinnerModal } = useContext(SpinnerModalContext);
 
   const submitRegistration = () => {
@@ -91,7 +89,6 @@ const Register = () => {
   return (
     <Box>
       <BoxStyled>
-        {currentUser ? <h1>Welcome {currentUser.username}!!</h1> : <h1>Please sign in</h1>}
         <h1>Register</h1>
         <PrimaryBorderTextField
           id="username"

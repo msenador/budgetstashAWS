@@ -43,7 +43,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [notification, setNotification] = useState('');
 
-  const { setCurrentUser, currentUser } = useContext(UserContext);
+  const { setCurrentUser } = useContext(UserContext);
   const { spinnerModal, setSpinnerModal } = useContext(SpinnerModalContext);
 
   const missingInputs = (email, password) => {
@@ -111,7 +111,6 @@ const Login = () => {
     <Box>
       <BoxStyled>
         <h1>Login</h1>
-        {currentUser ? <h1>Welcome {currentUser.username}</h1> : <h1>No USER</h1>}
         <PrimaryBorderTextField
           id="email"
           label="Enter Email"

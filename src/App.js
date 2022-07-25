@@ -10,7 +10,6 @@ const App = () => {
   const { currentUser, setCurrentUser } = useContext(UserContext);
 
   useEffect(() => {
-    console.log(currentUser);
     if (currentUser) {
       setCurrentUser(currentUser);
     } else {
