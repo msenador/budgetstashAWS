@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { Box } from '@mui/system';
 import { TextField, Button } from '@mui/material';
 import UserContext from '../context/UserContext';
+import { PulseLoader } from 'react-spinners';
+import Modal from 'react-modal';
 
 const BoxStyled = styled(Box)`
   display: flex;
@@ -23,39 +25,60 @@ const PrimaryBorderTextField = styled(TextField)`
   }
 `;
 
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+};
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [notification, setNotification] = useState('');
+  const [openModal, setOpenModal] = useState(false);
 
   const { setCurrentUser, currentUser } = useContext(UserContext);
+  // const { loading, setLoading } = useContext(SpinnerContext);
 
   const missingInputs = (email, password) => {
+    setOpenModal(true);
     if (!email || !password) {
       setNotification('All fields required');
+      setOpenModal(false);
       return true;
     }
   };
 
   const userDoesNotExist = (user) => {
+    setOpenModal(true);
     if (!user) {
       setNotification('User does not exist.');
       setCurrentUser([]);
+      setOpenModal(false);
       return true;
     }
   };
 
   const userValid = (inputPassword, dbEncryptedPW, user) => {
+    setOpenModal(true);
     if (bcrypt.compareSync(inputPassword, dbEncryptedPW)) {
       setCurrentUser(user[0]);
-      setNotification('Logged in');
+      setNotification('');
+      setOpenModal(false);
       return true;
     }
   };
 
   const incorrectCredentials = () => {
+    setOpenModal(true);
     setCurrentUser([]);
     setNotification('Email or password is incorrect');
+    setOpenModal(false);
   };
 
   const handleLogin = async () => {
@@ -87,6 +110,7 @@ const Login = () => {
     <Box>
       <BoxStyled>
         <h1>Login</h1>
+        {/* {loading && <PulseLoader color="gray" />} */}
         {currentUser ? <h1>Welcome {currentUser.username}</h1> : <h1>No USER</h1>}
         <PrimaryBorderTextField
           id="email"
@@ -108,6 +132,16 @@ const Login = () => {
         Login
       </Button>
       {notification && <div>{notification}</div>}
+      <Modal
+        ariaHideApp={false}
+        isOpen={openModal}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={() => setOpenModal(false)}
+        style={customStyles}
+        contentLabel="Example Modal">
+        <div>Loading . . .</div>
+        <PulseLoader color="gray" />
+      </Modal>
     </Box>
   );
 };
