@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { Box } from '@mui/system';
-// import styled from 'styled-components';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import { Button } from '@mui/material';

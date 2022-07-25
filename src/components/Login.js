@@ -7,6 +7,7 @@ import UserContext from '../context/UserContext';
 import { PulseLoader } from 'react-spinners';
 import Modal from 'react-modal';
 import SpinnerModalContext from '../context/SpinnerModalContext';
+import { MAIN_BLUE } from '../theme';
 
 const BoxStyled = styled(Box)`
   display: flex;
@@ -135,11 +136,9 @@ const Login = () => {
       <Modal
         ariaHideApp={false}
         isOpen={spinnerModal}
-        // onAfterOpen={afterOpenModal}
         onRequestClose={() => setSpinnerModal(false)}
         style={spinnerCustomStyles}>
-        <div>Loading . . .</div>
-        <PulseLoader color="gray" />
+        <PulseLoader color={MAIN_BLUE} />
       </Modal>
     </Box>
   );

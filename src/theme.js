@@ -1,25 +1,28 @@
 import { createTheme } from '@mui/material/styles';
 
+export const MAIN_BLUE = '#344966';
+export const MAIN_GREEN = '#84bc9c';
+
 export const theme = createTheme({
   components: {
     MuiAppBar: {
       styleOverrides: {
         colorPrimary: {
-          backgroundColor: '#344966'
+          backgroundColor: MAIN_BLUE
         }
       }
     }
   },
   palette: {
     primary: {
-      light: '#84bc9c',
-      main: '#344966',
-      dark: '#84bc9c'
+      light: MAIN_GREEN,
+      main: MAIN_BLUE,
+      dark: MAIN_GREEN
     },
     secondary: {
-      light: '#344966',
-      main: '#84bc9c',
-      dark: '#344966'
+      light: MAIN_BLUE,
+      main: MAIN_GREEN,
+      dark: MAIN_BLUE
     }
   }
 });
