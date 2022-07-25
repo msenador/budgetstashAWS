@@ -7,16 +7,19 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { theme } from './theme';
 import { UserProvider } from './context/UserContext';
+import { SpinnerModalProvider } from './context/SpinnerModalContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <UserProvider>
-        <ThemeProvider theme={theme}>
-          {console.log(theme)}
-          <App />
-        </ThemeProvider>
+        <SpinnerModalProvider>
+          <ThemeProvider theme={theme}>
+            {console.log(theme)}
+            <App />
+          </ThemeProvider>
+        </SpinnerModalProvider>
       </UserProvider>
     </BrowserRouter>
   </React.StrictMode>

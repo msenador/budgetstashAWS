@@ -3,6 +3,9 @@ import { Box } from '@mui/system';
 import styled from 'styled-components';
 import { TextField, Button } from '@mui/material';
 import UserContext from '../context/UserContext';
+import { PulseLoader } from 'react-spinners';
+import Modal from 'react-modal';
+import SpinnerModalContext from '../context/SpinnerModalContext';
 
 const BoxStyled = styled(Box)`
   display: flex;
@@ -22,6 +25,17 @@ const PrimaryBorderTextField = styled(TextField)`
   }
 `;
 
+const spinnerCustomStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+};
+
 const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -30,8 +44,10 @@ const Register = () => {
   const [notification, setNotification] = useState('');
 
   const { currentUser } = useContext(UserContext);
+  const { spinnerModal, setSpinnerModal } = useContext(SpinnerModalContext);
 
   const submitRegistration = async () => {
+    setSpinnerModal(true);
     const requestBody = {
       email: email,
       username: username,
@@ -68,6 +84,7 @@ const Register = () => {
       .catch((err) => {
         console.log(err);
       });
+    setSpinnerModal(false);
   };
 
   return (
@@ -110,6 +127,15 @@ const Register = () => {
           Register
         </Button>
       </BoxStyled>
+      <Modal
+        ariaHideApp={false}
+        isOpen={spinnerModal}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={() => setSpinnerModal(false)}
+        style={spinnerCustomStyles}>
+        <div>Loading . . .</div>
+        <PulseLoader color="gray" />
+      </Modal>
     </Box>
   );
 };

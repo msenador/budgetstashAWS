@@ -6,6 +6,7 @@ import { TextField, Button } from '@mui/material';
 import UserContext from '../context/UserContext';
 import { PulseLoader } from 'react-spinners';
 import Modal from 'react-modal';
+import SpinnerModalContext from '../context/SpinnerModalContext';
 
 const BoxStyled = styled(Box)`
   display: flex;
@@ -25,7 +26,7 @@ const PrimaryBorderTextField = styled(TextField)`
   }
 `;
 
-const customStyles = {
+const spinnerCustomStyles = {
   content: {
     top: '50%',
     left: '50%',
@@ -40,45 +41,44 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [notification, setNotification] = useState('');
-  const [openModal, setOpenModal] = useState(false);
 
   const { setCurrentUser, currentUser } = useContext(UserContext);
-  // const { loading, setLoading } = useContext(SpinnerContext);
+  const { spinnerModal, setSpinnerModal } = useContext(SpinnerModalContext);
 
   const missingInputs = (email, password) => {
-    setOpenModal(true);
+    setSpinnerModal(true);
     if (!email || !password) {
       setNotification('All fields required');
-      setOpenModal(false);
+      setSpinnerModal(false);
       return true;
     }
   };
 
   const userDoesNotExist = (user) => {
-    setOpenModal(true);
+    setSpinnerModal(true);
     if (!user) {
       setNotification('User does not exist.');
       setCurrentUser([]);
-      setOpenModal(false);
+      setSpinnerModal(false);
       return true;
     }
   };
 
   const userValid = (inputPassword, dbEncryptedPW, user) => {
-    setOpenModal(true);
+    setSpinnerModal(true);
     if (bcrypt.compareSync(inputPassword, dbEncryptedPW)) {
       setCurrentUser(user[0]);
       setNotification('');
-      setOpenModal(false);
+      setSpinnerModal(false);
       return true;
     }
   };
 
   const incorrectCredentials = () => {
-    setOpenModal(true);
+    setSpinnerModal(true);
     setCurrentUser([]);
     setNotification('Email or password is incorrect');
-    setOpenModal(false);
+    setSpinnerModal(false);
   };
 
   const handleLogin = async () => {
@@ -134,11 +134,10 @@ const Login = () => {
       {notification && <div>{notification}</div>}
       <Modal
         ariaHideApp={false}
-        isOpen={openModal}
+        isOpen={spinnerModal}
         // onAfterOpen={afterOpenModal}
-        onRequestClose={() => setOpenModal(false)}
-        style={customStyles}
-        contentLabel="Example Modal">
+        onRequestClose={() => setSpinnerModal(false)}
+        style={spinnerCustomStyles}>
         <div>Loading . . .</div>
         <PulseLoader color="gray" />
       </Modal>
