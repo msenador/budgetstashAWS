@@ -128,7 +128,6 @@ const Register = () => {
       <Modal
         ariaHideApp={false}
         isOpen={spinnerModal}
-        // onRequestClose={() => setSpinnerModal(false)}
         // eslint-disable-next-line prettier/prettier
         style={spinnerCustomStyles}
       >
