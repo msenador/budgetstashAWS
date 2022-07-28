@@ -81,7 +81,7 @@ const userExists = async (email) => {
 };
 
 const addUser = async (username, email, password) => {
-  const encryptedPW = bcrypt.hashSync(password, 10);
+  const encryptedPW = bcrypt.hashSync(password.trim(), 10);
 
   const user = {
     username: username,
@@ -94,7 +94,19 @@ const addUser = async (username, email, password) => {
     Item: {
       username: { S: user.username },
       email: { S: user.email },
-      password: { S: user.password }
+      password: { S: user.password },
+      January: { L: [] },
+      February: { L: [] },
+      March: { L: [] },
+      April: { L: [] },
+      May: { L: [] },
+      June: { L: [] },
+      July: { L: [] },
+      August: { L: [] },
+      September: { L: [] },
+      October: { L: [] },
+      November: { L: [] },
+      December: { L: [] }
     }
   };
 
