@@ -1,3 +1,5 @@
+// THIS LAMBDA DOES NOT ADD CATEGORIES. IT ADDS ITEMS.
+// CONNECTED TO add-item-budgetstash LAMBDA.
 const AWS = require('aws-sdk');
 
 const docClient = new AWS.DynamoDB.DocumentClient({ region: process.env.AWS_MY_REGION });
