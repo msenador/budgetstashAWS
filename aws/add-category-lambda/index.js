@@ -24,8 +24,9 @@ const addItem = (itemName, itemPrice, email) => {
   const itemDetails = {
     itemName: itemName,
     itemPrice: itemPrice,
-    date: `${month + 1}/${day} - ${hours - 4}:${minutes + 1}`
+    date: `${month + 1}/${day} - ${hours - 4}:${minutes + 1}` //TODO single digits should have a 0 in front of it.
   };
+
   return docClient
     .update({
       TableName: dynamoDBtable,
