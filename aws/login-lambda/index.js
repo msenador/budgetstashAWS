@@ -1,36 +1,86 @@
 const AWS = require('aws-sdk');
+const bcrypt = require('bcryptjs');
 
 AWS.config.update({
   region: process.env.AWS_MY_REGION
 });
 
 const dynamoDBtable = process.env.DYNAMODB_TABLE;
-const docClient = new AWS.DynamoDB.DocumentClient();
+const documentClient = new AWS.DynamoDB.DocumentClient({ region: process.env.AWS_MY_REGION });
 
-exports.handler = async () => {
-  const params = {
-    TableName: dynamoDBtable
-  };
+exports.handler = async (event) => {
+  console.log(event);
+  const body = JSON.parse(event.body);
 
-  const scanResults = [];
-  const items = {};
-  do {
-    const items = await docClient.scan(params).promise();
-    items.Items.forEach((item) => scanResults.push(item));
-    params.ExclusiveStartKey = items.LastEvaluatedKey;
-  } while (typeof items.LastEvaluatedKey !== 'undefined');
+  if (missingInputs(body.email, body.password) === true) {
+    return {
+      statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*' // Required for CORS support to work
+      },
+      body: JSON.stringify(`All fields are required`)
+    };
+  }
 
-  console.log('SCAN: ', scanResults);
+  return await getUser(body.email, body.password);
+};
 
-  const response = {
-    statusCode: 200,
-    headers: {
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
-    },
-    body: JSON.stringify(scanResults)
-  };
+const missingInputs = (email, password) => {
+  if (!email || !password) {
+    return true;
+  }
+};
 
-  return response;
+const getUser = async (email, inputPassword) => {
+  const response = await documentClient
+    .query({
+      TableName: dynamoDBtable,
+      ExpressionAttributeNames: {
+        '#email': 'email'
+      },
+      ExpressionAttributeValues: {
+        ':emailValue': email
+      },
+      KeyConditionExpression: '#email = :emailValue'
+    })
+    .promise();
+
+  if (response.Items.length === 0) {
+    return {
+      statusCode: 404,
+      headers: {
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'OPTIONS,POST'
+      },
+      body: JSON.stringify('User not found')
+    };
+  }
+
+  console.log('RESPONSE: ', response);
+  const encryptedPW = response.Items[0].password;
+
+  if (bcrypt.compareSync(inputPassword, encryptedPW) === false) {
+    return {
+      statusCode: 402,
+      headers: {
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'OPTIONS,POST'
+      },
+      body: JSON.stringify('Incorrect email or password')
+    };
+  }
+
+  if (bcrypt.compareSync(inputPassword, encryptedPW) === true) {
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'OPTIONS,POST'
+      },
+      body: JSON.stringify(response)
+    };
+  }
 };
