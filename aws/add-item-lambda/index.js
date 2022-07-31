@@ -16,17 +16,48 @@ exports.handler = async (event) => {
   console.log(event);
   const body = JSON.parse(event.body);
 
-  await addItem(body.itemName, body.itemPrice, body.email)
+  if (missingInputs(body.itemName, body.itemPrice)) {
+    return {
+      statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+        'Access-Control-Allow-Credentials': true // Required for cookies, authorization headers with HTTPS
+      },
+      body: JSON.stringify(`Item name and price is required`)
+    };
+  }
+
+  await addItem(body.itemName, body.itemPrice, body.email, month, day, hours, minutes)
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
+
+  return {
+    statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+      'Access-Control-Allow-Credentials': true // Required for cookies, authorization headers with HTTPS
+    },
+    body: JSON.stringify(`Item added`)
+  };
 };
 
-const addItem = (itemName, itemPrice, email) => {
+const missingInputs = (itemName, itemPrice) => {
+  if (!itemName || !itemPrice) {
+    return true;
+  }
+};
+
+const addItem = (itemName, itemPrice, email, month) => {
   const currentMonth = convertMonth(month);
+  const dateEST = new Date(today.getTime() + -240 * 60 * 1000);
+  const dateToString = dateEST.toString();
+  const splitDateToString = dateToString.split('');
+  const realEST = splitDateToString.slice(0, 24).join('');
+
   const itemDetails = {
     itemName: itemName,
     itemPrice: itemPrice,
-    date: `${month + 1}/${day} - ${hours - 4}:${minutes + 1}` //TODO single digits should have a 0 in front of it.
+    date: `${realEST}` //TODO single digits should have a 0 in front of it.
   };
 
   return docClient
@@ -75,22 +106,3 @@ const convertMonth = (currentMonth) => {
       return 'December';
   }
 };
-
-// const query = async () => { //USE THIS INSTEAD OF SCAN. ITS FASTER AND MORE COST EFFECTIVE.
-//   console.log('indside func');
-//   const response = await documentClient
-//     .query({
-//       TableName: dynamoDBtable,
-//       ExpressionAttributeNames: {
-//         '#email': 'email'
-//       },
-//       ExpressionAttributeValues: {
-//         ':emailValue': 'test@yahoo.com'
-//       },
-//       KeyConditionExpression: '#email = :emailValue'
-//     })
-//     .promise();
-
-//   console.log(`Query response: ${JSON.stringify(response, null, 2)}`);
-// };
-// await query().catch((error) => console.error(JSON.stringify(error, null, 2))); //USE THIS INSTEAD OF SCAN. ITS FASTER AND MORE COST EFFECTIVE.
