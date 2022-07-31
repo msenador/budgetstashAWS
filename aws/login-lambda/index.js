@@ -16,7 +16,8 @@ exports.handler = async (event) => {
     return {
       statusCode: 400,
       headers: {
-        'Access-Control-Allow-Origin': '*' // Required for CORS support to work
+        'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+        'Access-Control-Allow-Credentials': true // Required for cookies, authorization headers with HTTPS
       },
       body: JSON.stringify(`All fields are required`)
     };
@@ -49,9 +50,8 @@ const getUser = async (email, inputPassword) => {
     return {
       statusCode: 404,
       headers: {
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'OPTIONS,POST'
+        'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+        'Access-Control-Allow-Credentials': true // Required for cookies, authorization headers with HTTPS
       },
       body: JSON.stringify('User not found')
     };
@@ -64,9 +64,8 @@ const getUser = async (email, inputPassword) => {
     return {
       statusCode: 402,
       headers: {
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'OPTIONS,POST'
+        'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+        'Access-Control-Allow-Credentials': true // Required for cookies, authorization headers with HTTPS
       },
       body: JSON.stringify('Incorrect email or password')
     };
@@ -76,9 +75,8 @@ const getUser = async (email, inputPassword) => {
     return {
       statusCode: 200,
       headers: {
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'OPTIONS,POST'
+        'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+        'Access-Control-Allow-Credentials': true // Required for cookies, authorization headers with HTTPS
       },
       body: JSON.stringify(response)
     };

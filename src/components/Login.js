@@ -1,12 +1,11 @@
 import React, { useState, useContext } from 'react';
-import bcrypt from 'bcryptjs';
 import styled from 'styled-components';
 import { Box } from '@mui/system';
 import { TextField, Button } from '@mui/material';
 import UserContext from '../context/UserContext';
 import { PulseLoader } from 'react-spinners';
 import Modal from 'react-modal';
-import SpinnerModalContext from '../context/SpinnerModalContext';
+// import SpinnerModalContext from '../context/SpinnerModalContext';
 import { MAIN_BLUE } from '../theme';
 
 const BoxStyled = styled(Box)`
@@ -44,64 +43,109 @@ const Login = () => {
   const [notification, setNotification] = useState('');
 
   const { setCurrentUser } = useContext(UserContext);
-  const { spinnerModal, setSpinnerModal } = useContext(SpinnerModalContext);
+  // const { spinnerModal, setSpinnerModal } = useContext(SpinnerModalContext);
 
-  const missingInputs = (email, password) => {
-    setSpinnerModal(true);
-    if (!email || !password) {
-      setNotification('All fields required');
-      setSpinnerModal(false);
-      return true;
-    }
-  };
+  // const missingInputs = (email, password) => {
+  //   setSpinnerModal(true);
+  //   if (!email || !password) {
+  //     setNotification('All fields required');
+  //     setSpinnerModal(false);
+  //     return true;
+  //   }
+  // };
 
-  const userDoesNotExist = (user) => {
-    setSpinnerModal(true);
-    if (!user) {
-      setNotification('User does not exist.');
-      setCurrentUser([]);
-      setSpinnerModal(false);
-      return true;
-    }
-  };
+  // const userDoesNotExist = (user) => {
+  //   setSpinnerModal(true);
+  //   if (!user) {
+  //     setNotification('User does not exist.');
+  //     setCurrentUser([]);
+  //     setSpinnerModal(false);
+  //     return true;
+  //   }
+  // };
 
-  const userValid = (inputPassword, dbEncryptedPW, user) => {
-    setSpinnerModal(true);
-    if (bcrypt.compareSync(inputPassword, dbEncryptedPW)) {
-      setCurrentUser(user[0]);
-      setNotification('');
-      setSpinnerModal(false);
-      return true;
-    }
-  };
+  // const userValid = (inputPassword, dbEncryptedPW, user) => {
+  //   setSpinnerModal(true);
+  //   if (bcrypt.compareSync(inputPassword, dbEncryptedPW)) {
+  //     setCurrentUser(user[0]);
+  //     setNotification('');
+  //     setSpinnerModal(false);
+  //     return true;
+  //   }
+  // };
 
-  const incorrectCredentials = () => {
-    setSpinnerModal(true);
-    setCurrentUser([]);
-    setNotification('Email or password is incorrect');
-    setSpinnerModal(false);
-  };
+  // const incorrectCredentials = () => {
+  //   setSpinnerModal(true);
+  //   setCurrentUser([]);
+  //   setNotification('Email or password is incorrect');
+  //   setSpinnerModal(false);
+  // };
+
+  // const handleLogin = async () => {
+  //   if (missingInputs(email, password)) {
+  //     return;
+  //   }
+
+  //   try {
+  //     const res = await fetch('https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/login', {
+  //       'Content-Type': 'application/json'
+  //       // 'x-api-key': '3LvSDGxwh95e4vtIu61Xi4uY94wnM0kj9CvuRslE' // NOT WORKING
+  //     });
+  //     const data = await res.json();
+  //     const user = data.filter((user) => user.email === email);
+
+  //     if (userDoesNotExist(user[0])) {
+  //       return;
+  //     } else if (userValid(password, user[0].password, user)) {
+  //       return;
+  //     } else {
+  //       incorrectCredentials();
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const handleLogin = async () => {
-    if (missingInputs(email, password)) {
-      return;
-    }
+    const requestBody = {
+      email: email,
+      password: password
+    };
 
     try {
       const res = await fetch('https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/login', {
-        'Content-Type': 'application/json'
-        // 'x-api-key': '3LvSDGxwh95e4vtIu61Xi4uY94wnM0kj9CvuRslE' // NOT WORKING
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': '3LvSDGxwh95e4vtIu61Xi4uY94wnM0kj9CvuRslE'
+        },
+        body: JSON.stringify(requestBody)
       });
-      const data = await res.json();
-      const user = data.filter((user) => user.email === email);
 
-      if (userDoesNotExist(user[0])) {
-        return;
-      } else if (userValid(password, user[0].password, user)) {
-        return;
-      } else {
-        incorrectCredentials();
+      switch (res.status) {
+        case 400:
+          setNotification('All fields are required');
+          return;
+        case 404:
+          setNotification('User not found');
+          return;
+        case 402:
+          setNotification('Incorrect email or password');
+          return;
       }
+
+      const data = await res.json();
+      console.log(data.Items[0]);
+      setCurrentUser(data.Items[0]);
+      // const user = data.filter((user) => user.email === email);
+
+      // if (userDoesNotExist(user[0])) {
+      //   return;
+      // } else if (userValid(password, user[0].password, user)) {
+      //   return;
+      // } else {
+      //   incorrectCredentials();
+      // }
     } catch (err) {
       console.log(err);
     }
@@ -133,7 +177,7 @@ const Login = () => {
       {notification && <div>{notification}</div>}
       <Modal
         ariaHideApp={false}
-        isOpen={spinnerModal}
+        // isOpen={spinnerModal}
         // eslint-disable-next-line prettier/prettier
         style={spinnerCustomStyles}
       >
