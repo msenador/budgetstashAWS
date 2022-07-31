@@ -27,6 +27,6 @@ yarn-error.log*
 /aws/login-lambda/*.zip
 /aws/register-lambda/node_modules
 /aws/register-lambda/*.zip
-/aws/add-category-lambda/*.zip
-/aws/add-category-lambda/node_modules
+/aws/add-item-lambda/*.zip
+/aws/add-item-lambda/node_modules
 

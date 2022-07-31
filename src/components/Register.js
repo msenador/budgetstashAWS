@@ -45,8 +45,10 @@ const Register = () => {
 
   const { spinnerModal, setSpinnerModal } = useContext(SpinnerModalContext);
 
-  const submitRegistration = () => {
-    setSpinnerModal(true);
+  const submitRegistration = async () => {
+    console.log('hit!', spinnerModal);
+    await setSpinnerModal(true);
+    console.log('hittttt!', spinnerModal);
     const requestBody = {
       email: email,
       username: username,
@@ -63,6 +65,7 @@ const Register = () => {
       body: JSON.stringify(requestBody)
     })
       .then((response) => {
+        console.log('HIT');
         switch (response.status) {
           case 400:
             setNotification('All fields required.');
