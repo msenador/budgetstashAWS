@@ -45,10 +45,10 @@ const Register = () => {
 
   const { spinnerModal, setSpinnerModal } = useContext(SpinnerModalContext);
 
-  const submitRegistration = async () => {
+  const submitRegistration = () => {
     console.log('hit!', spinnerModal);
-    await setSpinnerModal(true);
-    console.log('hittttt!', spinnerModal);
+    setSpinnerModal(true);
+
     const requestBody = {
       email: email,
       username: username,
@@ -69,24 +69,25 @@ const Register = () => {
         switch (response.status) {
           case 400:
             setNotification('All fields required.');
+            setSpinnerModal(false);
             break;
           case 402:
             setNotification('Passwords do not match');
+            setSpinnerModal(false);
             break;
           case 409:
             setNotification('Email address already exists.');
+            setSpinnerModal(false);
             break;
           case 200:
             setNotification('Registration Successful!');
+            setSpinnerModal(false);
             break;
-          default:
-            setNotification('Registration');
         }
       })
       .catch((err) => {
         console.log(err);
       });
-    setSpinnerModal(false);
   };
 
   return (
@@ -101,14 +102,14 @@ const Register = () => {
           onChange={(e) => setUsername(e.target.value)}
         />
         <PrimaryBorderTextField
-          id="email"
+          id="email-register"
           label="Enter Email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <PrimaryBorderTextField
-          id="password"
+          id="password-register"
           label="Enter Password"
           placeholder="Password"
           type="password"
@@ -131,9 +132,8 @@ const Register = () => {
       <Modal
         ariaHideApp={false}
         isOpen={spinnerModal}
-        // eslint-disable-next-line prettier/prettier
-        style={spinnerCustomStyles}
-      >
+        onAfterClose={() => setSpinnerModal(false)} //NEED THIS. Messes up logout if not used.
+        style={spinnerCustomStyles}>
         <PulseLoader color={MAIN_BLUE} />
       </Modal>
     </Box>
