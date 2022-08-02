@@ -5,9 +5,10 @@ import UserContext from '../context/UserContext';
 const MemberContent = () => {
   const { currentUser } = useContext(UserContext);
 
+  const date = new Date();
+  const month = date.getMonth();
+
   const getMonthlyTotal = () => {
-    const date = new Date();
-    const month = date.getMonth();
     let prices = [];
     switch (month) {
       case 1:
@@ -63,11 +64,42 @@ const MemberContent = () => {
     }
   };
 
+  const convertMonth = (currentMonth) => {
+    switch (currentMonth) {
+      case 1:
+        return 'January';
+      case 2:
+        return 'February';
+      case 3:
+        return 'March';
+      case 4:
+        return 'April';
+      case 5:
+        return 'May';
+      case 6:
+        return 'June';
+      case 7:
+        return 'July';
+      case 8:
+        return 'August';
+      case 9:
+        return 'September';
+      case 10:
+        return 'October';
+      case 11:
+        return 'November';
+      case 12:
+        return 'December';
+    }
+  };
+
   return (
-    <Box>
+    <Box padding={'100px'}>
       <h1>Welcome {currentUser.username}!</h1>
-      <h3>monthly budget: </h3>
+      <h1>{convertMonth(month)} Overview</h1>
       <h3>Total spent this month: {getMonthlyTotal()}</h3>
+
+      {}
     </Box>
   );
 };

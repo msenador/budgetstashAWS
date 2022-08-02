@@ -20,7 +20,7 @@ const App = () => {
 
   return (
     <Box>
-      <Appbar />
+      {currentUser.username ? <Appbar /> : 'PLACEHOLDER: Login, CintactUs'}
       <Routes>
         <Route path="/" element={currentUser.username ? <MemberContent /> : <Home />} />
       </Routes>
