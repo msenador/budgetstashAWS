@@ -27,7 +27,7 @@ exports.handler = async (event) => {
     };
   }
 
-  await addItem(
+  return await addItem(
     body.itemName,
     body.itemPrice,
     body.category,
@@ -37,18 +37,7 @@ exports.handler = async (event) => {
     day,
     hours,
     minutes
-  )
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
-
-  return {
-    statusCode: 200,
-    headers: {
-      'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-      'Access-Control-Allow-Credentials': true // Required for cookies, authorization headers with HTTPS
-    },
-    body: JSON.stringify(`Item added`)
-  };
+  );
 };
 
 const missingInputs = (itemName, itemPrice, category) => {
@@ -57,7 +46,7 @@ const missingInputs = (itemName, itemPrice, category) => {
   }
 };
 
-const addItem = (itemName, itemPrice, category, email, monthSelected) => {
+const addItem = async (itemName, itemPrice, category, email, monthSelected) => {
   const dateEST = new Date(today.getTime() + -240 * 60 * 1000);
   const dateToString = dateEST.toString();
   const splitDateToString = dateToString.split('');
@@ -71,7 +60,7 @@ const addItem = (itemName, itemPrice, category, email, monthSelected) => {
     monthSelected: monthSelected
   };
 
-  return docClient
+  await docClient
     .update({
       TableName: dynamoDBtable,
       Key: {
@@ -87,4 +76,28 @@ const addItem = (itemName, itemPrice, category, email, monthSelected) => {
       }
     })
     .promise();
+
+  const response = await docClient
+    .query({
+      TableName: dynamoDBtable,
+      ExpressionAttributeNames: {
+        '#email': 'email'
+      },
+      ExpressionAttributeValues: {
+        ':emailValue': email
+      },
+      KeyConditionExpression: '#email = :emailValue'
+    })
+    .promise();
+
+  console.log('RES: ', response);
+
+  return {
+    statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+      'Access-Control-Allow-Credentials': true // Required for cookies, authorization headers with HTTPS
+    },
+    body: JSON.stringify(response)
+  };
 };
