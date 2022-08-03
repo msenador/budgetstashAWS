@@ -16,18 +16,28 @@ exports.handler = async (event) => {
   console.log(event);
   const body = JSON.parse(event.body);
 
-  if (missingInputs(body.itemName, body.itemPrice)) {
+  if (missingInputs(body.itemName, body.itemPrice, body.category)) {
     return {
       statusCode: 400,
       headers: {
         'Access-Control-Allow-Origin': '*', // Required for CORS support to work
         'Access-Control-Allow-Credentials': true // Required for cookies, authorization headers with HTTPS
       },
-      body: JSON.stringify(`Item name and price is required`)
+      body: JSON.stringify(`Item name, price, and category are required`)
     };
   }
 
-  await addItem(body.itemName, body.itemPrice, body.email, month, day, hours, minutes)
+  await addItem(
+    body.itemName,
+    body.itemPrice,
+    body.category,
+    body.email,
+    body.monthSelected,
+    month,
+    day,
+    hours,
+    minutes
+  )
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
 
@@ -41,14 +51,13 @@ exports.handler = async (event) => {
   };
 };
 
-const missingInputs = (itemName, itemPrice) => {
-  if (!itemName || !itemPrice) {
+const missingInputs = (itemName, itemPrice, category) => {
+  if (!itemName || !itemPrice || !category) {
     return true;
   }
 };
 
-const addItem = (itemName, itemPrice, email, month) => {
-  const currentMonth = convertMonth(month);
+const addItem = (itemName, itemPrice, category, email, monthSelected) => {
   const dateEST = new Date(today.getTime() + -240 * 60 * 1000);
   const dateToString = dateEST.toString();
   const splitDateToString = dateToString.split('');
@@ -57,7 +66,9 @@ const addItem = (itemName, itemPrice, email, month) => {
   const itemDetails = {
     itemName: itemName,
     itemPrice: itemPrice,
-    date: `${realEST}` //TODO single digits should have a 0 in front of it.
+    date: `${realEST}`,
+    category: category.toLowerCase(),
+    monthSelected: monthSelected
   };
 
   return docClient
@@ -66,9 +77,9 @@ const addItem = (itemName, itemPrice, email, month) => {
       Key: {
         email: email
       },
-      UpdateExpression: `set #${currentMonth} = list_append(if_not_exists(#${currentMonth}, :empty_list), :itemDetails)`,
+      UpdateExpression: `set #${monthSelected} = list_append(if_not_exists(#${monthSelected}, :empty_list), :itemDetails)`,
       ExpressionAttributeNames: {
-        [`#${currentMonth}`]: [currentMonth]
+        [`#${monthSelected}`]: [monthSelected]
       },
       ExpressionAttributeValues: {
         ':itemDetails': [itemDetails],
@@ -76,33 +87,4 @@ const addItem = (itemName, itemPrice, email, month) => {
       }
     })
     .promise();
-};
-
-const convertMonth = (currentMonth) => {
-  switch (currentMonth) {
-    case 0:
-      return 'January';
-    case 1:
-      return 'February';
-    case 2:
-      return 'March';
-    case 3:
-      return 'April';
-    case 4:
-      return 'May';
-    case 5:
-      return 'June';
-    case 6:
-      return 'July';
-    case 7:
-      return 'August';
-    case 8:
-      return 'September';
-    case 9:
-      return 'October';
-    case 10:
-      return 'November';
-    case 11:
-      return 'December';
-  }
 };
