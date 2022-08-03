@@ -52,7 +52,7 @@ const MemberContent = () => {
   const [itemName, setItemName] = useState('');
   const [itemPrice, setItemPrice] = useState('');
   const [itemCategory, setItemCategory] = useState('');
-  // const [notification, setNotification] = useState('');
+  const [notification, setNotification] = useState('');
 
   const { currentUser, setCurrentUser } = useContext(UserContext);
 
@@ -188,27 +188,19 @@ const MemberContent = () => {
           body: JSON.stringify(requestBody)
         }
       );
-      // .then((response) => {
-      //   console.log('json: ', response.json());
-      //   response.json();
-      // })
-      // .then((data) => {
-      //   console.log(data);
-      // });
+
+      switch (res.status) {
+        case 400:
+          setNotification('All fields are required');
+          return;
+        case 200:
+          setNotification('Item Added');
+      }
 
       const data = await res.json();
       console.log('DT: ', data.Items[0]);
       setCurrentUser(data.Items[0]);
       localStorage.setItem('userEmail', JSON.stringify(currentUser));
-
-      // switch (res.status) {
-      //   case 400:
-      //     setNotification('All fields are required');
-      //     return;
-      //   case 200:
-      //     setNotification('Item Added');
-      //     return;
-      // }
     } catch (err) {
       console.log(err);
     }
@@ -317,7 +309,7 @@ const MemberContent = () => {
       <Button variant="contained" color="primary" onClick={handleAddItem}>
         Add Item
       </Button>
-      {/* {notification && <div>{notification}</div>} */}
+      {notification && <div>{notification}</div>}
 
       {currentUser[currentMonthSelected].length > 0 &&
         currentUser[currentMonthSelected].map((item) => {
