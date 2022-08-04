@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import UserContext from '../context/UserContext';
 import { Button, TextField } from '@mui/material';
 import PostAddIcon from '@mui/icons-material/PostAdd';
-// import ClearIcon from '@mui/icons-material/Clear';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const PrimaryBorderTextField = styled(TextField)`
   & label.Mui-focused {
@@ -170,6 +170,11 @@ const MemberContent = () => {
   };
 
   const handleAddItem = async () => {
+    if (!itemPrice || !itemName || !itemCategory) {
+      setNotification('All fields are required');
+      return;
+    }
+
     const requestBody = {
       email: currentUser.email,
       itemName: itemName,
@@ -211,6 +216,12 @@ const MemberContent = () => {
   useEffect(() => {
     setNotification('');
   }, [currentMonthSelected]);
+
+  // const itemsOrderedbyDate = () => {
+  //   currentUser[currentMonthSelected].map(() => {
+
+  //   })
+  // }
 
   return (
     <Box padding={'100px'}>
@@ -298,15 +309,15 @@ const MemberContent = () => {
 
       <Box style={{ display: 'flex', justifyContent: 'space-around' }}>
         <Box>
-          <h3>TOTAL SPENT: {parseFloat(getMonthlyTotal()).toFixed(2)}</h3>
+          <h3>TOTAL SPENT: ${parseFloat(getMonthlyTotal()).toFixed(2)}</h3>
         </Box>
 
         <Box>
           <hr width="1" size="600" />
         </Box>
 
-        <Box style={{ marginRight: '20%' }}>
-          <Box style={{ display: 'flex', justifyContent: 'space-around', gap: '5px' }}>
+        <Box style={{ width: '1000px' }}>
+          <Box style={{ display: 'flex', justifyContent: 'center', gap: '5px' }}>
             <Button variant="contained" color="primary" onClick={handleAddItem}>
               <PostAddIcon />
             </Button>
@@ -334,7 +345,13 @@ const MemberContent = () => {
               onChange={(e) => setItemCategory(e.target.value)}
             />
           </Box>
-          <Box style={{ color: 'red', marginBottom: '40px' }}>
+          <Box
+            style={{
+              color: 'red',
+              marginBottom: '40px',
+              display: 'flex',
+              justifyContent: 'center'
+            }}>
             {notification && <Box>*{notification}</Box>}
           </Box>
 
@@ -345,26 +362,47 @@ const MemberContent = () => {
             <Box>Category</Box>
           </Box>
 
-          {/* <Divider style={{ padding: '10px' }} /> */}
           <hr />
 
-          <Box>
+          <Box
+            style={{
+              height: '465px',
+              overflowY: 'auto',
+              overflowX: 'auto',
+              border: '3px solid black'
+            }}>
             {currentUser[currentMonthSelected].length > 0 &&
               currentUser[currentMonthSelected].map((item, index) => {
                 return (
-                  // eslint-disable-next-line react/jsx-key
                   <Box
                     key={`${item.itemName} - ${item.date}`}
                     style={{
                       display: 'flex',
                       justifyContent: 'space-between',
-                      backgroundColor: index % 2 === 0 ? 'aliceblue' : '',
-                      marginLeft: '-100px'
+                      backgroundColor: index % 2 === 0 ? 'aliceblue' : ''
                     }}>
-                    <Button>X</Button>
-                    <Box style={{ width: '100px' }}>{item.itemName}</Box>
+                    <Box
+                      style={{
+                        width: '100px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between'
+                      }}>
+                      <Box>{item.itemName}</Box>
+                      <Box>
+                        <button
+                          style={{
+                            color: '#E24E1B',
+                            border: 'none',
+                            backgroundColor: index % 2 === 0 ? 'aliceblue' : 'white',
+                            cursor: 'pointer'
+                          }}>
+                          <DeleteIcon />
+                        </button>
+                      </Box>
+                    </Box>
 
-                    <Box style={{ width: '100px' }}>{item.itemPrice}</Box>
+                    <Box style={{ width: '100px' }}>${item.itemPrice}</Box>
 
                     <Box style={{ width: '100px' }}>{item.date}</Box>
 
