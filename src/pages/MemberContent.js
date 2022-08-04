@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import { Box } from '@mui/system';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import UserContext from '../context/UserContext';
 import { Button, TextField } from '@mui/material';
+import PostAddIcon from '@mui/icons-material/PostAdd';
+// import ClearIcon from '@mui/icons-material/Clear';
 
 const PrimaryBorderTextField = styled(TextField)`
   & label.Mui-focused {
@@ -206,6 +208,10 @@ const MemberContent = () => {
     }
   };
 
+  useEffect(() => {
+    setNotification('');
+  }, [currentMonthSelected]);
+
   return (
     <Box padding={'100px'}>
       <Box display={'flex'} justifyContent={'space-around'}>
@@ -282,44 +288,93 @@ const MemberContent = () => {
           December
         </Button>
       </Box>
-      <h1>{currentMonthSelected} Overview</h1>
-      <h3>Total spent this month: {parseFloat(getMonthlyTotal()).toFixed(2)}</h3>
 
-      <PrimaryBorderTextField
-        id="item-name"
-        label="Name"
-        placeholder="Item name"
-        value={itemName}
-        onChange={(e) => setItemName(e.target.value)}
-      />
-      <PrimaryBorderTextField
-        id="item-price"
-        label="Price"
-        placeholder="Item price"
-        value={itemPrice}
-        onChange={(e) => setItemPrice(e.target.value)}
-      />
-      <PrimaryBorderTextField
-        id="item-category"
-        label="Category"
-        placeholder="Item category"
-        value={itemCategory}
-        onChange={(e) => setItemCategory(e.target.value)}
-      />
-      <Button variant="contained" color="primary" onClick={handleAddItem}>
-        Add Item
-      </Button>
-      {notification && <div>{notification}</div>}
+      {/* <Divider style={{ padding: '20px' }} /> */}
+      <hr style={{ marginTop: '20px' }} />
 
-      {currentUser[currentMonthSelected].length > 0 &&
-        currentUser[currentMonthSelected].map((item) => {
-          return (
-            // eslint-disable-next-line react/jsx-key
-            <li>
-              {item.itemName} -- {item.itemPrice} -- {item.date} -- {item.category}
-            </li>
-          );
-        })}
+      <h1 style={{ display: 'flex', justifyContent: 'center', fontSize: '50px' }}>
+        {currentMonthSelected} Summary
+      </h1>
+
+      <Box style={{ display: 'flex', justifyContent: 'space-around' }}>
+        <Box>
+          <h3>TOTAL SPENT: {parseFloat(getMonthlyTotal()).toFixed(2)}</h3>
+        </Box>
+
+        <Box>
+          <hr width="1" size="600" />
+        </Box>
+
+        <Box style={{ marginRight: '20%' }}>
+          <Box style={{ display: 'flex', justifyContent: 'space-around', gap: '5px' }}>
+            <Button variant="contained" color="primary" onClick={handleAddItem}>
+              <PostAddIcon />
+            </Button>
+            <PrimaryBorderTextField
+              id="item-name"
+              label="Item name"
+              placeholder="Name"
+              value={itemName}
+              onChange={(e) => setItemName(e.target.value)}
+            />
+
+            <PrimaryBorderTextField
+              id="item-price"
+              label="Item price"
+              placeholder="Price"
+              value={itemPrice}
+              onChange={(e) => setItemPrice(e.target.value)}
+            />
+
+            <PrimaryBorderTextField
+              id="item-category"
+              label="Item category"
+              placeholder="Category"
+              value={itemCategory}
+              onChange={(e) => setItemCategory(e.target.value)}
+            />
+          </Box>
+          <Box style={{ color: 'red', marginBottom: '40px' }}>
+            {notification && <Box>*{notification}</Box>}
+          </Box>
+
+          <Box style={{ display: 'flex', justifyContent: 'space-around', fontWeight: '900' }}>
+            <Box>Item</Box>
+            <Box>Price</Box>
+            <Box>Date</Box>
+            <Box>Category</Box>
+          </Box>
+
+          {/* <Divider style={{ padding: '10px' }} /> */}
+          <hr />
+
+          <Box>
+            {currentUser[currentMonthSelected].length > 0 &&
+              currentUser[currentMonthSelected].map((item, index) => {
+                return (
+                  // eslint-disable-next-line react/jsx-key
+                  <Box
+                    key={`${item.itemName} - ${item.date}`}
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      backgroundColor: index % 2 === 0 ? 'aliceblue' : '',
+                      marginLeft: '-100px'
+                    }}>
+                    <Button>X</Button>
+                    <Box style={{ width: '100px' }}>{item.itemName}</Box>
+
+                    <Box style={{ width: '100px' }}>{item.itemPrice}</Box>
+
+                    <Box style={{ width: '100px' }}>{item.date}</Box>
+
+                    <Box style={{ width: '100px' }}>{item.category}</Box>
+                  </Box>
+                );
+              })}
+          </Box>
+        </Box>
+      </Box>
     </Box>
   );
 };
