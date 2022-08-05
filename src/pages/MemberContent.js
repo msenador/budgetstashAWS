@@ -205,7 +205,39 @@ const MemberContent = () => {
       }
 
       const data = await res.json();
-      console.log('DT: ', data.Items[0]);
+      setCurrentUser(data.Items[0]);
+      localStorage.setItem('userEmail', JSON.stringify(currentUser));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleDeleteItem = async (email, monthSelected, index) => {
+    const requestBody = {
+      email: email,
+      monthSelected: monthSelected,
+      index: index
+    };
+
+    try {
+      const res = await fetch(
+        'https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/delete-item',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': 'tERGwOFDPqasKeo78uWbw3T5AOWKUmVm4sS8DT0W'
+          },
+          body: JSON.stringify(requestBody)
+        }
+      );
+
+      switch (res.status) {
+        case 200:
+          setNotification('Item Delete');
+      }
+
+      const data = await res.json();
       setCurrentUser(data.Items[0]);
       localStorage.setItem('userEmail', JSON.stringify(currentUser));
     } catch (err) {
@@ -216,12 +248,6 @@ const MemberContent = () => {
   useEffect(() => {
     setNotification('');
   }, [currentMonthSelected]);
-
-  // const itemsOrderedbyDate = () => {
-  //   currentUser[currentMonthSelected].map(() => {
-
-  //   })
-  // }
 
   return (
     <Box padding={'100px'}>
@@ -391,6 +417,9 @@ const MemberContent = () => {
                       <Box>{item.itemName}</Box>
                       <Box>
                         <button
+                          onClick={() =>
+                            handleDeleteItem(currentUser.email, currentMonthSelected, index)
+                          }
                           style={{
                             color: '#E24E1B',
                             border: 'none',

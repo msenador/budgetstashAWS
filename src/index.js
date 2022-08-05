@@ -16,7 +16,7 @@ root.render(
       <UserProvider>
         <SpinnerModalProvider>
           <ThemeProvider theme={theme}>
-            {console.log(theme)}
+            {/* {console.log(theme)} */}
             <App />
           </ThemeProvider>
         </SpinnerModalProvider>
