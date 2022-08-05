@@ -230,25 +230,25 @@ const MemberContent = () => {
           onClick={() => setCurrentMonthSelected('January')}
           color="primary"
           variant={currentMonthSelected === 'January' ? 'contained' : 'outlined'}>
-          January
+          Jan
         </Button>
         <Button
           onClick={() => setCurrentMonthSelected('February')}
           color="primary"
           variant={currentMonthSelected === 'February' ? 'contained' : 'outlined'}>
-          February
+          Feb
         </Button>
         <Button
           onClick={() => setCurrentMonthSelected('March')}
           color="primary"
           variant={currentMonthSelected === 'March' ? 'contained' : 'outlined'}>
-          March
+          Mar
         </Button>
         <Button
           onClick={() => setCurrentMonthSelected('April')}
           color="primary"
           variant={currentMonthSelected === 'April' ? 'contained' : 'outlined'}>
-          April
+          Apr
         </Button>
         <Button
           onClick={() => setCurrentMonthSelected('May')}
@@ -272,31 +272,31 @@ const MemberContent = () => {
           onClick={() => setCurrentMonthSelected('August')}
           color="primary"
           variant={currentMonthSelected === 'August' ? 'contained' : 'outlined'}>
-          August
+          Aug
         </Button>
         <Button
           onClick={() => setCurrentMonthSelected('September')}
           color="primary"
           variant={currentMonthSelected === 'September' ? 'contained' : 'outlined'}>
-          September
+          Sept
         </Button>
         <Button
           onClick={() => setCurrentMonthSelected('October')}
           color="primary"
           variant={currentMonthSelected === 'October' ? 'contained' : 'outlined'}>
-          October
+          Oct
         </Button>
         <Button
           onClick={() => setCurrentMonthSelected('November')}
           color="primary"
           variant={currentMonthSelected === 'November' ? 'contained' : 'outlined'}>
-          November
+          Nov
         </Button>
         <Button
           onClick={() => setCurrentMonthSelected('December')}
           color="primary"
           variant={currentMonthSelected === 'December' ? 'contained' : 'outlined'}>
-          December
+          Dec
         </Button>
       </Box>
 
