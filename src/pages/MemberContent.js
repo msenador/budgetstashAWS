@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import { Box } from '@mui/system';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useMemo } from 'react';
 import UserContext from '../context/UserContext';
 import { Button, TextField } from '@mui/material';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Line } from 'rc-progress';
+// import { Line } from 'rc-progress';
 
 const PrimaryBorderTextField = styled(TextField)`
   & label.Mui-focused {
@@ -50,6 +52,8 @@ const convertMonth = (currentMonth) => {
 };
 
 const MemberContent = () => {
+  let dataForProgressBars = [];
+
   const [currentMonthSelected, setCurrentMonthSelected] = useState(convertMonth(month));
   const [itemName, setItemName] = useState('');
   const [itemPrice, setItemPrice] = useState('');
@@ -178,7 +182,7 @@ const MemberContent = () => {
     const requestBody = {
       email: currentUser.email,
       itemName: itemName,
-      itemPrice: itemPrice,
+      itemPrice: parseFloat(itemPrice).toFixed(2),
       category: itemCategory,
       monthSelected: currentMonthSelected
     };
@@ -245,7 +249,40 @@ const MemberContent = () => {
     }
   };
 
+  const progressBarsData = (currentUser, currentMonthSelected) => {
+    // let data = {};
+    // let categories = [];
+    // let percentage = [];
+    let seen = [];
+
+    currentUser[currentMonthSelected].map((userItem) => {
+      if (!seen.includes(userItem.category)) {
+        let data = {
+          total: userItem.itemPrice,
+          category: userItem.category
+        };
+        console.log('DATA: ', data.total);
+        dataForProgressBars.push(data);
+        seen.push(userItem.category);
+      } else {
+        dataForProgressBars.map((dataItem) => {
+          if (dataItem.category === userItem.category) {
+            dataItem.total = parseFloat(dataItem.total) + parseFloat(userItem.itemPrice);
+          }
+        });
+      }
+    });
+
+    console.log('DATA: ', dataForProgressBars);
+  };
+
+  useMemo(() => {
+    progressBarsData(currentUser, currentMonthSelected);
+  }, [dataForProgressBars]);
+
   useEffect(() => {
+    console.log(currentUser);
+    // console.log(currentMonthSelected);
     setNotification('');
   }, [currentMonthSelected]);
 
@@ -326,7 +363,6 @@ const MemberContent = () => {
         </Button>
       </Box>
 
-      {/* <Divider style={{ padding: '20px' }} /> */}
       <hr style={{ marginTop: '20px' }} />
 
       <h1 style={{ display: 'flex', justifyContent: 'center', fontSize: '50px' }}>
@@ -335,7 +371,40 @@ const MemberContent = () => {
 
       <Box style={{ display: 'flex', justifyContent: 'space-around' }}>
         <Box>
-          <h3>TOTAL SPENT: ${parseFloat(getMonthlyTotal()).toFixed(2)}</h3>
+          <h3 style={{ textAlign: 'center ' }}>
+            TOTAL SPENT: ${parseFloat(getMonthlyTotal()).toFixed(2)}
+          </h3>
+
+          <hr style={{ marginTop: '20px' }} />
+
+          {dataForProgressBars.length > 0 ? (
+            <Box style={{ border: 'inset', padding: '20px', width: '450px' }}>
+              {dataForProgressBars &&
+                dataForProgressBars
+                  .sort((a, b) => b.total - a.total)
+                  .map((item) => {
+                    return (
+                      // eslint-disable-next-line react/jsx-key
+                      <Box>
+                        <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <Box style={{ fontWeight: '900' }}>{item.category.toUpperCase()}</Box>
+                          <Box>{((item.total / getMonthlyTotal()) * 100).toFixed(2)}%</Box>
+                          <Box>{`($${parseFloat(item.total)})`}</Box>
+                        </Box>
+                        <Line
+                          percent={((item.total / getMonthlyTotal()) * 100).toFixed(2)}
+                          strokeWidth={4}
+                          strokeColor="lightblue"
+                        />
+                      </Box>
+                    );
+                  })}
+            </Box>
+          ) : (
+            <Box style={{ textAlign: 'center' }}>
+              <h1>No Items</h1>
+            </Box>
+          )}
         </Box>
 
         <Box>
@@ -361,6 +430,8 @@ const MemberContent = () => {
               placeholder="Price"
               value={itemPrice}
               onChange={(e) => setItemPrice(e.target.value)}
+              pattern="\d\d.\d\d"
+              required
             />
 
             <PrimaryBorderTextField
@@ -407,6 +478,8 @@ const MemberContent = () => {
                       justifyContent: 'space-between',
                       backgroundColor: index % 2 === 0 ? 'aliceblue' : ''
                     }}>
+                    <Box>{index.toString().split('').length === 1 ? `0${index}` : `${index}`}</Box>
+
                     <Box
                       style={{
                         width: '100px',
