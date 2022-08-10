@@ -79,7 +79,6 @@ const Login = () => {
       }
 
       const data = await res.json();
-      console.log(data.Items[0]);
       setCurrentUser(data.Items[0]);
     } catch (err) {
       console.log(err);

@@ -4,8 +4,12 @@ import React, { useContext, useEffect, useState, useMemo } from 'react';
 import UserContext from '../context/UserContext';
 import { Button, TextField } from '@mui/material';
 import PostAddIcon from '@mui/icons-material/PostAdd';
-import DeleteIcon from '@mui/icons-material/Delete';
+// import DeleteIcon from '@mui/icons-material/Delete';
 import { Line } from 'rc-progress';
+import SpinnerModalContext from '../context/SpinnerModalContext';
+import { PulseLoader } from 'react-spinners';
+import Modal from 'react-modal';
+import { MAIN_BLUE } from '../theme';
 // import { Line } from 'rc-progress';
 
 const PrimaryBorderTextField = styled(TextField)`
@@ -18,6 +22,17 @@ const PrimaryBorderTextField = styled(TextField)`
     }
   }
 `;
+
+const spinnerCustomStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+};
 
 const date = new Date();
 const month = date.getMonth();
@@ -61,6 +76,7 @@ const MemberContent = () => {
   const [notification, setNotification] = useState('');
 
   const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { spinnerModal, setSpinnerModal } = useContext(SpinnerModalContext);
 
   const januaryTotal = () => {
     const prices = currentUser.January.map((item) =>
@@ -173,9 +189,19 @@ const MemberContent = () => {
     }
   };
 
+  const handlePressEnterAddItem = (e) => {
+    if (e.key === 'Enter') {
+      handleAddItem();
+      setSpinnerModal(false);
+    }
+  };
+
   const handleAddItem = async () => {
+    setSpinnerModal(true);
+
     if (!itemPrice || !itemName || !itemCategory) {
       setNotification('All fields are required');
+      setSpinnerModal(false);
       return;
     }
 
@@ -203,9 +229,14 @@ const MemberContent = () => {
       switch (res.status) {
         case 400:
           setNotification('All fields are required');
+          setSpinnerModal(false);
           return;
         case 200:
           setNotification('Item Added');
+          setItemName('');
+          setItemPrice('');
+          setItemCategory('');
+          setSpinnerModal(false);
       }
 
       const data = await res.json();
@@ -217,6 +248,7 @@ const MemberContent = () => {
   };
 
   const handleDeleteItem = async (email, monthSelected, index) => {
+    setSpinnerModal(true);
     const requestBody = {
       email: email,
       monthSelected: monthSelected,
@@ -239,6 +271,7 @@ const MemberContent = () => {
       switch (res.status) {
         case 200:
           setNotification('Item Delete');
+          setSpinnerModal(false);
       }
 
       const data = await res.json();
@@ -261,7 +294,6 @@ const MemberContent = () => {
           total: userItem.itemPrice,
           category: userItem.category
         };
-        console.log('DATA: ', data.total);
         dataForProgressBars.push(data);
         seen.push(userItem.category);
       } else {
@@ -272,8 +304,6 @@ const MemberContent = () => {
         });
       }
     });
-
-    console.log('DATA: ', dataForProgressBars);
   };
 
   useMemo(() => {
@@ -281,7 +311,7 @@ const MemberContent = () => {
   }, [dataForProgressBars]);
 
   useEffect(() => {
-    console.log(currentUser);
+    // console.log(currentUser);
     // console.log(currentMonthSelected);
     setNotification('');
   }, [currentMonthSelected]);
@@ -371,14 +401,22 @@ const MemberContent = () => {
 
       <Box style={{ display: 'flex', justifyContent: 'space-around' }}>
         <Box>
-          <h3 style={{ textAlign: 'center ' }}>
+          <h1 style={{ textAlign: 'center ' }}>
             TOTAL SPENT: ${parseFloat(getMonthlyTotal()).toFixed(2)}
-          </h3>
+          </h1>
 
           <hr style={{ marginTop: '20px' }} />
 
           {dataForProgressBars.length > 0 ? (
-            <Box style={{ border: 'inset', padding: '20px', width: '450px' }}>
+            <Box
+              style={{
+                border: 'inset',
+                padding: '20px',
+                width: '450px',
+                height: '465px',
+                overflowY: 'auto',
+                overflowX: 'auto'
+              }}>
               {dataForProgressBars &&
                 dataForProgressBars
                   .sort((a, b) => b.total - a.total)
@@ -389,7 +427,7 @@ const MemberContent = () => {
                         <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
                           <Box style={{ fontWeight: '900' }}>{item.category.toUpperCase()}</Box>
                           <Box>{((item.total / getMonthlyTotal()) * 100).toFixed(2)}%</Box>
-                          <Box>{`($${parseFloat(item.total)})`}</Box>
+                          <Box>{`($${parseFloat(item.total).toFixed(2)})`}</Box>
                         </Box>
                         <Line
                           percent={((item.total / getMonthlyTotal()) * 100).toFixed(2)}
@@ -422,6 +460,7 @@ const MemberContent = () => {
               placeholder="Name"
               value={itemName}
               onChange={(e) => setItemName(e.target.value)}
+              onKeyDown={handlePressEnterAddItem}
             />
 
             <PrimaryBorderTextField
@@ -430,8 +469,7 @@ const MemberContent = () => {
               placeholder="Price"
               value={itemPrice}
               onChange={(e) => setItemPrice(e.target.value)}
-              pattern="\d\d.\d\d"
-              required
+              onKeyDown={handlePressEnterAddItem}
             />
 
             <PrimaryBorderTextField
@@ -440,6 +478,7 @@ const MemberContent = () => {
               placeholder="Category"
               value={itemCategory}
               onChange={(e) => setItemCategory(e.target.value)}
+              onKeyDown={handlePressEnterAddItem}
             />
           </Box>
           <Box
@@ -452,7 +491,8 @@ const MemberContent = () => {
             {notification && <Box>*{notification}</Box>}
           </Box>
 
-          <Box style={{ display: 'flex', justifyContent: 'space-around', fontWeight: '900' }}>
+          <Box style={{ display: 'flex', justifyContent: 'space-between', fontWeight: '900' }}>
+            <Box>Count ({currentUser[currentMonthSelected].length})</Box>
             <Box>Item</Box>
             <Box>Price</Box>
             <Box>Date</Box>
@@ -466,9 +506,9 @@ const MemberContent = () => {
               height: '465px',
               overflowY: 'auto',
               overflowX: 'auto',
-              border: '3px solid black'
+              border: '2px inset'
             }}>
-            {currentUser[currentMonthSelected].length > 0 &&
+            {currentUser[currentMonthSelected].length > 0 ? (
               currentUser[currentMonthSelected].map((item, index) => {
                 return (
                   <Box
@@ -478,7 +518,30 @@ const MemberContent = () => {
                       justifyContent: 'space-between',
                       backgroundColor: index % 2 === 0 ? 'aliceblue' : ''
                     }}>
-                    <Box>{index.toString().split('').length === 1 ? `0${index}` : `${index}`}</Box>
+                    {/* <Box>{index.toString().split('').length === 1 ? `0${index +}` : `${index}`}</Box> */}
+                    <Box
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                        textAlign: 'center'
+                      }}>
+                      <Box>{index + 1}</Box>
+                      <Box>
+                        <button
+                          onClick={() =>
+                            handleDeleteItem(currentUser.email, currentMonthSelected, index)
+                          }
+                          style={{
+                            color: 'white',
+                            border: 'none',
+                            backgroundColor: '#E24E1B',
+                            cursor: 'pointer'
+                          }}>
+                          <Box>Delete</Box>
+                        </button>
+                      </Box>
+                    </Box>
 
                     <Box
                       style={{
@@ -488,20 +551,6 @@ const MemberContent = () => {
                         justifyContent: 'space-between'
                       }}>
                       <Box>{item.itemName}</Box>
-                      <Box>
-                        <button
-                          onClick={() =>
-                            handleDeleteItem(currentUser.email, currentMonthSelected, index)
-                          }
-                          style={{
-                            color: '#E24E1B',
-                            border: 'none',
-                            backgroundColor: index % 2 === 0 ? 'aliceblue' : 'white',
-                            cursor: 'pointer'
-                          }}>
-                          <DeleteIcon />
-                        </button>
-                      </Box>
                     </Box>
 
                     <Box style={{ width: '100px' }}>${item.itemPrice}</Box>
@@ -511,10 +560,16 @@ const MemberContent = () => {
                     <Box style={{ width: '100px' }}>{item.category}</Box>
                   </Box>
                 );
-              })}
+              })
+            ) : (
+              <h1 style={{ textAlign: 'center' }}>No Items</h1>
+            )}
           </Box>
         </Box>
       </Box>
+      <Modal ariaHideApp={false} isOpen={spinnerModal} style={spinnerCustomStyles}>
+        <PulseLoader color={MAIN_BLUE} />
+      </Modal>
     </Box>
   );
 };
