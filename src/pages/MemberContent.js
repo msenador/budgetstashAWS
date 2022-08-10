@@ -470,6 +470,7 @@ const MemberContent = () => {
               value={itemPrice}
               onChange={(e) => setItemPrice(e.target.value)}
               onKeyDown={handlePressEnterAddItem}
+              type="number"
             />
 
             <PrimaryBorderTextField
