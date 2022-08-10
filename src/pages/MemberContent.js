@@ -389,7 +389,7 @@ const MemberContent = () => {
                         <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
                           <Box style={{ fontWeight: '900' }}>{item.category.toUpperCase()}</Box>
                           <Box>{((item.total / getMonthlyTotal()) * 100).toFixed(2)}%</Box>
-                          <Box>{`($${parseFloat(item.total)})`}</Box>
+                          <Box>{`($${parseFloat(item.total).toFixed(2)})`}</Box>
                         </Box>
                         <Line
                           percent={((item.total / getMonthlyTotal()) * 100).toFixed(2)}
