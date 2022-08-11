@@ -8,7 +8,7 @@ import Login from '../components/Login';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import CssBaseline from '@mui/material/CssBaseline';
+// import CssBaseline from '@mui/material/CssBaseline';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Fab from '@mui/material/Fab';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -21,6 +21,31 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 const Logo = styled.img`
   height: 130px;
+`;
+
+const HomeVideo = styled.video`
+  object-fit: cover;
+  width: 100%;
+  position: sticky;
+  z-index: -1;
+  margin-top: 17px;
+  box-shadow: 1px 1px 20px -1px grey;
+  height: 600px;
+`;
+
+const CarouselBox = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 70px;
+`;
+
+const CarouselStyles = styled(Carousel)`
+  .control-dots {
+    margin-bottom: 78px;
+  }
+  .carousel-status {
+    font-size: 0;
+  }
 `;
 
 const ScrollTop = (props) => {
@@ -52,34 +77,51 @@ const Home = (props) => {
     setFlipCard(!flipCard);
   };
 
+  const handleLoginAppBar = () => {
+    setFlipCard(true);
+    scroll.scrollToTop();
+  };
+
   return (
     <Box>
-      <CssBaseline />
-      <div xyz="fade">
-        <AppBar>
-          <Toolbar style={{ display: 'flex', justifyContent: 'space-around' }}>
-            <Button onClick={() => setFlipCard(true)} style={{ color: 'white' }}>
-              Login
-            </Button>
-            <Button style={{ color: 'white' }} onClick={() => scroll.scrollToBottom()}>
-              Contact Us
-            </Button>
-          </Toolbar>
-        </AppBar>
-      </div>
+      <AppBar>
+        <Toolbar style={{ display: 'flex', justifyContent: 'space-around' }}>
+          <Button onClick={handleLoginAppBar} style={{ color: 'white' }}>
+            Login
+          </Button>
+          <Button style={{ color: 'white' }} onClick={() => scroll.scrollToBottom()}>
+            Contact Us
+          </Button>
+        </Toolbar>
+      </AppBar>
+
+      <CarouselBox>
+        <Logo src="BudgetStash3.png" alt="BudgetStash Logo" />
+        <CarouselStyles autoPlay interval={3500} infiniteLoop>
+          {quotes &&
+            quotes.map((quote, i) => (
+              <Box style={{ marginTop: '45px' }} key={i}>
+                <Box style={{ fontWeight: '500', fontStyle: 'italic' }}>{quote.quote}</Box>
+                <Box style={{ marginTop: '20px', fontFamily: 'Avenir Next' }}>{quote.author}</Box>
+              </Box>
+            ))}
+        </CarouselStyles>
+      </CarouselBox>
+      <HomeVideo
+        src="./lightBulbHand.mp4"
+        autoPlay={true}
+        loop={true}
+        controls={false}
+        playsInline
+        muted
+        type="video/mp4"
+      />
       <Toolbar id="back-to-top-anchor" />
       <ScrollTop {...props}>
         <Fab size="small" aria-label="scroll back to top" onClick={() => scroll.scrollToTop()}>
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollTop>
-
-      <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Logo src="BudgetStash3.png" alt="BudgetStash Logo" />
-        <Carousel autoPlay interval={3500} infiniteLoop>
-          {quotes && quotes.map((quote, i) => <Box key={i}>{quote.quote}</Box>)}
-        </Carousel>
-      </Box>
 
       <Box>
         <ReactCardFlip
@@ -89,7 +131,7 @@ const Home = (props) => {
           // eslint-disable-next-line prettier/prettier
           flipSpeedFrontToBack="1"
         >
-          <Box key="front">
+          <Box key="front" style={{ border: '5px solid #84bc9c', borderRadius: '10px' }}>
             <Register />
             <button onClick={flipRegisterLogin}>flip</button>
           </Box>
