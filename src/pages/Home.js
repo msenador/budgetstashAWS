@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '@animxyz/core';
 import styled from 'styled-components';
 import { Box } from '@mui/system';
@@ -22,6 +22,8 @@ import FadeIn from 'react-fade-in';
 import AboutUs from '../components/About/AboutUs';
 import Contact from '../components/Contact';
 import { Icon } from '@iconify/react';
+import Modal from 'react-modal';
+import Login from '../components/Login';
 
 const Logo = styled.img`
   height: 130px;
@@ -99,6 +101,20 @@ const FooterContainer = styled.div`
   padding: 20px;
 `;
 
+const ModalCustomStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    borderRadius: '50px',
+    textAlign: 'center',
+    height: '300px'
+  }
+};
+
 const ScrollTop = (props) => {
   const { children, window } = props;
   const trigger = useScrollTrigger({
@@ -122,6 +138,7 @@ ScrollTop.propTypes = {
 };
 
 const Home = (props) => {
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
   // const [flipCard, setFlipCard] = useState(false);
 
   // const flipRegisterLogin = () => {
@@ -137,7 +154,9 @@ const Home = (props) => {
     <Box>
       <AppBar>
         <Toolbar style={{ display: 'flex', justifyContent: 'space-around' }}>
-          <Button style={{ color: 'white' }}>Login</Button>
+          <Button onClick={() => setLoginModalOpen(true)} style={{ color: 'white' }}>
+            Login
+          </Button>
           <Button style={{ color: 'white' }} onClick={() => scroll.scrollToBottom()}>
             Contact Us
           </Button>
@@ -203,6 +222,14 @@ const Home = (props) => {
           2022
         </div>
       </FooterContainer>
+      <Modal
+        ariaHideApp={false}
+        onRequestClose={() => setLoginModalOpen(false)}
+        isOpen={loginModalOpen}
+        onAfterClose={() => setLoginModalOpen(false)} //NEED THIS. Messes up logout if not used.
+        style={ModalCustomStyles}>
+        <Login />
+      </Modal>
       {/* <Box>
         <ReactCardFlip
           isFlipped={flipCard}
