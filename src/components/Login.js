@@ -56,7 +56,6 @@ const Login = () => {
   const handlePressEnter = (e) => {
     if (e.key === 'Enter') {
       handleLogin();
-      setSpinnerModal(false);
     }
   };
 
@@ -91,10 +90,13 @@ const Login = () => {
           setNotification('Incorrect email or password');
           setSpinnerModal(false);
           return;
+        case 200:
+          // eslint-disable-next-line no-case-declarations
+          const data = await res.json();
+          setCurrentUser(data.Items[0]);
+          setSpinnerModal(false);
+          return;
       }
-
-      const data = await res.json();
-      setCurrentUser(data.Items[0]);
     } catch (err) {
       console.log(err);
     }

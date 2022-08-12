@@ -101,7 +101,6 @@ const Register = () => {
   const handlePressEnter = (e) => {
     if (e.key === 'Enter') {
       submitRegistration();
-      setSpinnerModal(false);
     }
   };
 

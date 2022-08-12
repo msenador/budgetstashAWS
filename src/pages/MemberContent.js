@@ -4,13 +4,11 @@ import React, { useContext, useEffect, useState, useMemo } from 'react';
 import UserContext from '../context/UserContext';
 import { Button, TextField } from '@mui/material';
 import PostAddIcon from '@mui/icons-material/PostAdd';
-// import DeleteIcon from '@mui/icons-material/Delete';
 import { Line } from 'rc-progress';
 import SpinnerModalContext from '../context/SpinnerModalContext';
 import { PulseLoader } from 'react-spinners';
 import Modal from 'react-modal';
 import { MAIN_BLUE } from '../theme';
-// import { Line } from 'rc-progress';
 
 const PrimaryBorderTextField = styled(TextField)`
   & label.Mui-focused {
@@ -192,7 +190,6 @@ const MemberContent = () => {
   const handlePressEnterAddItem = (e) => {
     if (e.key === 'Enter') {
       handleAddItem();
-      setSpinnerModal(false);
     }
   };
 
@@ -283,9 +280,6 @@ const MemberContent = () => {
   };
 
   const progressBarsData = (currentUser, currentMonthSelected) => {
-    // let data = {};
-    // let categories = [];
-    // let percentage = [];
     let seen = [];
 
     currentUser[currentMonthSelected].map((userItem) => {
@@ -311,8 +305,6 @@ const MemberContent = () => {
   }, [dataForProgressBars]);
 
   useEffect(() => {
-    // console.log(currentUser);
-    // console.log(currentMonthSelected);
     setNotification('');
   }, [currentMonthSelected]);
 
