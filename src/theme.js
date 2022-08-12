@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 
+// #ECA72C GOLD Yellow
 export const MAIN_BLUE = '#344966';
 export const MAIN_GREEN = '#84bc9c';
 

@@ -6,6 +6,10 @@ import { PulseLoader } from 'react-spinners';
 import Modal from 'react-modal';
 import SpinnerModalContext from '../context/SpinnerModalContext';
 import { MAIN_BLUE } from '../theme';
+import { AccountCircle } from '@mui/icons-material';
+import BadgeIcon from '@mui/icons-material/Badge';
+import LockIcon from '@mui/icons-material/Lock';
+import SyncLockIcon from '@mui/icons-material/SyncLock';
 
 const BoxStyled = styled(Box)`
   display: flex;
@@ -35,6 +39,12 @@ const spinnerCustomStyles = {
     transform: 'translate(-50%, -50%)'
   }
 };
+
+const HRstyles = styled.hr`
+  border: 2px solid black;
+  width: 80%;
+  margin-top: -20px;
+`;
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -88,44 +98,74 @@ const Register = () => {
       });
   };
 
+  const handlePressEnter = (e) => {
+    if (e.key === 'Enter') {
+      submitRegistration();
+      setSpinnerModal(false);
+    }
+  };
+
   return (
     <Box>
       <BoxStyled>
         <h1>Register</h1>
-        <PrimaryBorderTextField
-          id="username"
-          label="Enter Username"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <PrimaryBorderTextField
-          id="email-register"
-          label="Enter Email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <PrimaryBorderTextField
-          id="password-register"
-          label="Enter Password"
-          placeholder="Password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <PrimaryBorderTextField
-          id="confirmPassword"
-          label="Confirm Password"
-          placeholder="Confirm Password"
-          type="password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
-        {notification && <Box>{notification}</Box>}
-        <Button variant="contained" color="primary" onClick={submitRegistration}>
+        <HRstyles />
+        <Box sx={{ display: 'flex', alignItems: 'flex-end', margin: 'auto' }}>
+          <BadgeIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+          <PrimaryBorderTextField
+            variant="standard"
+            id="username-register"
+            label="Enter Username"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            onKeyDown={handlePressEnter}
+          />
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'flex-end', margin: 'auto' }}>
+          <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+          <PrimaryBorderTextField
+            variant="standard"
+            id="email-register"
+            label="Enter Email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onKeyDown={handlePressEnter}
+          />
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'flex-end', margin: 'auto' }}>
+          <LockIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+          <PrimaryBorderTextField
+            variant="standard"
+            id="password-register"
+            label="Enter Password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={handlePressEnter}
+          />
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'flex-end', margin: 'auto' }}>
+          <SyncLockIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+          <PrimaryBorderTextField
+            variant="standard"
+            id="confirmPassword-register"
+            label="Confirm Password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            onKeyDown={handlePressEnter}
+          />
+        </Box>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={submitRegistration}
+          style={{ marginTop: '30px' }}>
           Register
         </Button>
+        {notification && <Box style={{ color: '#E24E1B' }}>*{notification}</Box>}
       </BoxStyled>
       <Modal
         ariaHideApp={false}

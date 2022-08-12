@@ -9,6 +9,7 @@ export const UserProvider = ({ children }) => {
   const logoutUser = () => {
     setCurrentUser([]);
     localStorage.clear();
+    location.reload(); // Need this or re-login bug is present.
   };
 
   return (
