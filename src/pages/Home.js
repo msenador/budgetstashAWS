@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '@animxyz/core';
 import styled from 'styled-components';
 import { Box } from '@mui/system';
-import ReactCardFlip from 'react-card-flip';
-import Register from '../components/Register';
-import Login from '../components/Login';
+// import ReactCardFlip from 'react-card-flip';
+// import Register from '../components/Register';
+// import Login from '../components/Login';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -18,9 +18,14 @@ import { Button } from '@mui/material';
 import quotes from '../media/Quotes.json';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import FadeIn from 'react-fade-in';
+import AboutUs from '../components/About/AboutUs';
+import Contact from '../components/Contact';
+import { Icon } from '@iconify/react';
 
 const Logo = styled.img`
   height: 130px;
+  margin-left: 50px;
 `;
 
 const HomeVideo = styled.video`
@@ -48,6 +53,52 @@ const CarouselStyles = styled(Carousel)`
   }
 `;
 
+const Slogan = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  font-size: 35px;
+  font-weight: bold;
+  margin-top: -551px;
+  position: absolute;
+`;
+
+const RegisterBtnPosition = styled.div`
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  margin-top: -400px;
+`;
+
+const SignupButton = styled.button`
+  margin-left: 74px;
+  border-radius: 100px;
+  height: 200px;
+  width: 200px;
+  background: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  outline: none;
+  border: 2px solid #fff;
+  cursor: pointer;
+  &:hover {
+    background: white;
+    transition: 0.3s;
+    color: black;
+  }
+`;
+
+const FooterContainer = styled.div`
+  background-color: #84bc9c;
+  height: 20px;
+  font-style: italic;
+  display: flex;
+  justify-content: space-around;
+  color: white;
+  padding: 20px;
+`;
+
 const ScrollTop = (props) => {
   const { children, window } = props;
   const trigger = useScrollTrigger({
@@ -58,7 +109,7 @@ const ScrollTop = (props) => {
 
   return (
     <Fade in={trigger}>
-      <Box role="presentation" sx={{ position: 'fixed', bottom: 16, right: 16 }}>
+      <Box role="presentation" sx={{ position: 'fixed', bottom: 16, right: 16, zIndex: '1' }}>
         {children}
       </Box>
     </Fade>
@@ -71,24 +122,22 @@ ScrollTop.propTypes = {
 };
 
 const Home = (props) => {
-  const [flipCard, setFlipCard] = useState(false);
+  // const [flipCard, setFlipCard] = useState(false);
 
-  const flipRegisterLogin = () => {
-    setFlipCard(!flipCard);
-  };
+  // const flipRegisterLogin = () => {
+  //   setFlipCard(!flipCard);
+  // };
 
-  const handleLoginAppBar = () => {
-    setFlipCard(true);
-    scroll.scrollToTop();
-  };
+  // const handleLoginAppBar = () => {
+  //   setFlipCard(true);
+  //   scroll.scrollToTop();
+  // };
 
   return (
     <Box>
       <AppBar>
         <Toolbar style={{ display: 'flex', justifyContent: 'space-around' }}>
-          <Button onClick={handleLoginAppBar} style={{ color: 'white' }}>
-            Login
-          </Button>
+          <Button style={{ color: 'white' }}>Login</Button>
           <Button style={{ color: 'white' }} onClick={() => scroll.scrollToBottom()}>
             Contact Us
           </Button>
@@ -97,11 +146,13 @@ const Home = (props) => {
 
       <CarouselBox>
         <Logo src="BudgetStash3.png" alt="BudgetStash Logo" />
-        <CarouselStyles autoPlay interval={3500} infiniteLoop>
+        <CarouselStyles autoPlay interval={5500} infiniteLoop showThumbs={false}>
           {quotes &&
             quotes.map((quote, i) => (
               <Box style={{ marginTop: '45px' }} key={i}>
-                <Box style={{ fontWeight: '500', fontStyle: 'italic' }}>{quote.quote}</Box>
+                <Box style={{ fontWeight: '500', fontStyle: 'italic', fontSize: '20px' }}>
+                  {quote.quote}
+                </Box>
                 <Box style={{ marginTop: '20px', fontFamily: 'Avenir Next' }}>{quote.author}</Box>
               </Box>
             ))}
@@ -116,6 +167,22 @@ const Home = (props) => {
         muted
         type="video/mp4"
       />
+
+      <Slogan data-testid="slogan">
+        <FadeIn transitionDuration={4500}>
+          <div>Be confident.</div>
+        </FadeIn>
+        <FadeIn transitionDuration={4500} delay={1200}>
+          <div>Be free.</div>
+        </FadeIn>
+        <FadeIn transitionDuration={4500} delay={2500}>
+          <div>Be ready.</div>
+        </FadeIn>
+      </Slogan>
+
+      <RegisterBtnPosition>
+        <SignupButton>Join for free!</SignupButton>
+      </RegisterBtnPosition>
       <Toolbar id="back-to-top-anchor" />
       <ScrollTop {...props}>
         <Fab size="small" aria-label="scroll back to top" onClick={() => scroll.scrollToTop()}>
@@ -123,7 +190,20 @@ const Home = (props) => {
         </Fab>
       </ScrollTop>
 
-      <Box>
+      <AboutUs />
+
+      <Contact />
+
+      <FooterContainer>
+        <div>
+          BudgetStash{' '}
+          <span>
+            <Icon icon="charm:copyright" color="white" />
+          </span>{' '}
+          2022
+        </div>
+      </FooterContainer>
+      {/* <Box>
         <ReactCardFlip
           isFlipped={flipCard}
           flipDirection="vertical"
@@ -141,8 +221,7 @@ const Home = (props) => {
             <button onClick={flipRegisterLogin}>flip</button>
           </Box>
         </ReactCardFlip>
-      </Box>
-      <Box style={{ backgroundColor: 'red', height: '6000px' }}>stuff</Box>
+      </Box> */}
     </Box>
   );
 };
