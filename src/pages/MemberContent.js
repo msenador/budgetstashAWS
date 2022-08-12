@@ -229,7 +229,7 @@ const MemberContent = () => {
           setSpinnerModal(false);
           return;
         case 200:
-          setNotification('Item Added');
+          setNotification('');
           setItemName('');
           setItemPrice('');
           setItemCategory('');

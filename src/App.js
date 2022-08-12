@@ -20,7 +20,6 @@ const App = () => {
 
   return (
     <Box>
-      {console.log('HIT: ', currentUser)}
       {currentUser.username && <Appbar />}
       <Routes>
         <Route path="/" element={currentUser.username ? <MemberContent /> : <Home />} />

@@ -20,6 +20,19 @@ import UserContext from '../context/UserContext';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PhoneIcon from '@mui/icons-material/Phone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Button } from '@mui/material';
+import Modal from 'react-modal';
+
+const LogoutModalCustomStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+};
 
 const drawerWidth = 240;
 
@@ -91,6 +104,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function MiniDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [logoutModalOpen, setLogoutModalOpen] = React.useState(false);
   const { currentUser, logoutUser } = React.useContext(UserContext);
 
   const handleDrawerOpen = () => {
@@ -171,7 +185,7 @@ export default function MiniDrawer() {
 
           <ListItem disablePadding sx={{ display: 'block' }}>
             <ListItemButton
-              onClick={logoutUser}
+              onClick={() => setLogoutModalOpen(true)}
               sx={{
                 minHeight: 48,
                 justifyContent: open ? 'initial' : 'center',
@@ -190,6 +204,27 @@ export default function MiniDrawer() {
           </ListItem>
         </List>
       </Drawer>
+
+      <Modal
+        ariaHideApp={false}
+        onRequestClose={() => setLogoutModalOpen(false)}
+        isOpen={logoutModalOpen}
+        onAfterClose={() => setLogoutModalOpen(false)}
+        style={LogoutModalCustomStyles}>
+        <Box style={{ display: 'flex', flexDirection: 'column' }}>
+          <Box>
+            <h2>Are you sure you want to logout?</h2>
+          </Box>
+          <Box style={{ display: 'flex', justifyContent: 'space-around' }}>
+            <Button variant="contained" onClick={logoutUser}>
+              YES
+            </Button>
+            <Button variant="outlined" onClick={() => setLogoutModalOpen(false)}>
+              CANCEL
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
     </Box>
   );
 }
