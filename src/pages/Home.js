@@ -205,13 +205,13 @@ const Home = (props) => {
 
       <Slogan data-testid="slogan">
         <FadeIn transitionDuration={4500}>
-          <div>Be confident.</div>
+          <div>Be Confident.</div>
         </FadeIn>
         <FadeIn transitionDuration={4500} delay={1200}>
-          <div>Be free.</div>
+          <div>Be Free.</div>
         </FadeIn>
         <FadeIn transitionDuration={4500} delay={2500}>
-          <div>Be ready.</div>
+          <div>Be Ready.</div>
         </FadeIn>
       </Slogan>
 

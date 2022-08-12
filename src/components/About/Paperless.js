@@ -1,19 +1,8 @@
 import React, { useState } from 'react';
 import ReactCardFlip from 'react-card-flip';
-import { FlipCardBtn, CardContainer } from '../../globalStyles';
+import { CardContainer } from '../../globalStyles';
 import { Icon } from '@iconify/react';
-import styled from 'styled-components';
-
-const CardBtnStyles = styled(FlipCardBtn)`
-  background-color: #84bc9c;
-  width: 70%;
-  color: black;
-  font-style: italic;
-  height: 30px;
-  border-radius: 20px;
-  align-self: center;
-  text-decoration: none;
-`;
+import { Button } from '@mui/material';
 
 const Paperless = () => {
   const [flip, setFlip] = useState(false);
@@ -26,7 +15,9 @@ const Paperless = () => {
       <CardContainer style={{ backgroundColor: 'aliceblue' }} key="front">
         <h1>Paperless</h1>
         <Icon icon="healthicons:i-documents-denied" style={{ fontSize: '200px', margin: 'auto' }} />
-        <CardBtnStyles onClick={handleFlip}>Learn more</CardBtnStyles>
+        <Button variant="contained" onClick={handleFlip} style={{ width: '200px', margin: 'auto' }}>
+          Learn more
+        </Button>
       </CardContainer>
 
       <CardContainer style={{ backgroundColor: 'aliceblue' }} key="back">
@@ -35,7 +26,9 @@ const Paperless = () => {
           Help us save the trees while keeping you organized! Download your budgetary expenses as a
           PDF and save it on your computer for easier storage.
         </div>
-        <CardBtnStyles onClick={handleFlip}>Back</CardBtnStyles>
+        <Button variant="contained" onClick={handleFlip} style={{ width: '200px', margin: 'auto' }}>
+          Back
+        </Button>
       </CardContainer>
     </ReactCardFlip>
   );

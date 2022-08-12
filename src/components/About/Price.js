@@ -1,19 +1,8 @@
 import React, { useState } from 'react';
 import ReactCardFlip from 'react-card-flip';
 import { Icon } from '@iconify/react';
-import { FlipCardBtn, CardContainer } from '../../globalStyles';
-import styled from 'styled-components';
-
-const CardBtnStyles = styled(FlipCardBtn)`
-  background-color: #84bc9c;
-  width: 70%;
-  color: black;
-  font-style: italic;
-  height: 30px;
-  border-radius: 20px;
-  align-self: center;
-  text-decoration: none;
-`;
+import { CardContainer } from '../../globalStyles';
+import { Button } from '@mui/material';
 
 const Price = () => {
   const [flip, setFlip] = useState(false);
@@ -29,7 +18,9 @@ const Price = () => {
         <div>
           <Icon icon="dashicons:money-alt" style={{ fontSize: '187px', margin: 'auto' }} />
         </div>
-        <CardBtnStyles onClick={handleFlip}>Learn more</CardBtnStyles>
+        <Button variant="contained" onClick={handleFlip} style={{ width: '200px', margin: 'auto' }}>
+          Learn more
+        </Button>
       </CardContainer>
 
       <CardContainer style={{ backgroundColor: 'aliceblue' }} key="back">
@@ -38,7 +29,9 @@ const Price = () => {
           You should be saving money, not spending it! However, donations are always welcomed to
           help keep our budgeting services free of charge!
         </div>
-        <CardBtnStyles onClick={handleFlip}>Back</CardBtnStyles>
+        <Button variant="contained" onClick={handleFlip} style={{ width: '200px', margin: 'auto' }}>
+          Back
+        </Button>
       </CardContainer>
     </ReactCardFlip>
   );

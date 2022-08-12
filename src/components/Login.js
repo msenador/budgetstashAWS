@@ -17,6 +17,12 @@ const BoxStyled = styled(Box)`
   gap: 10px;
 `;
 
+const HRstyles = styled.hr`
+  border: 2px solid black;
+  width: 80%;
+  margin-top: -20px;
+`;
+
 const PrimaryBorderTextField = styled(TextField)`
   & label.Mui-focused {
     color: #344966;
@@ -99,6 +105,7 @@ const Login = () => {
     <Box>
       <BoxStyled>
         <h1 style={{ textAlign: 'center' }}>Login</h1>
+        <HRstyles />
         <Box sx={{ display: 'flex', alignItems: 'flex-end', margin: 'auto' }}>
           <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
           <PrimaryBorderTextField
@@ -111,21 +118,6 @@ const Login = () => {
             onKeyDown={handlePressEnter}
           />
         </Box>
-        {/* <PrimaryBorderTextField
-          id="email-login"
-          label="Enter Email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        /> */}
-        {/* <PrimaryBorderTextField
-          id="password-login"
-          label="Enter Password"
-          placeholder="Password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        /> */}
         <Box sx={{ display: 'flex', alignItems: 'flex-end', margin: 'auto' }}>
           <LockIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
           <PrimaryBorderTextField
