@@ -24,6 +24,7 @@ import Contact from '../components/Contact';
 import { Icon } from '@iconify/react';
 import Modal from 'react-modal';
 import Login from '../components/Login';
+import Register from '../components/Register';
 
 const Logo = styled.img`
   height: 130px;
@@ -101,7 +102,7 @@ const FooterContainer = styled.div`
   padding: 20px;
 `;
 
-const ModalCustomStyles = {
+const LoginModalCustomStyles = {
   content: {
     top: '50%',
     left: '50%',
@@ -112,6 +113,20 @@ const ModalCustomStyles = {
     borderRadius: '50px',
     textAlign: 'center',
     height: '300px'
+  }
+};
+
+const RegisterModalCustomStyles = {
+  content: {
+    height: '450px',
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    borderRadius: '50px',
+    textAlign: 'center'
   }
 };
 
@@ -139,6 +154,7 @@ ScrollTop.propTypes = {
 
 const Home = (props) => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [registerModalOpen, setRegisterModalOpen] = useState(false);
   // const [flipCard, setFlipCard] = useState(false);
 
   // const flipRegisterLogin = () => {
@@ -200,7 +216,7 @@ const Home = (props) => {
       </Slogan>
 
       <RegisterBtnPosition>
-        <SignupButton>Join for free!</SignupButton>
+        <SignupButton onClick={() => setRegisterModalOpen(true)}>Join for free!</SignupButton>
       </RegisterBtnPosition>
       <Toolbar id="back-to-top-anchor" />
       <ScrollTop {...props}>
@@ -227,8 +243,16 @@ const Home = (props) => {
         onRequestClose={() => setLoginModalOpen(false)}
         isOpen={loginModalOpen}
         onAfterClose={() => setLoginModalOpen(false)} //NEED THIS. Messes up logout if not used.
-        style={ModalCustomStyles}>
+        style={LoginModalCustomStyles}>
         <Login />
+      </Modal>
+      <Modal
+        ariaHideApp={false}
+        onRequestClose={() => setRegisterModalOpen(false)}
+        isOpen={registerModalOpen}
+        onAfterClose={() => setRegisterModalOpen(false)} //NEED THIS. Messes up logout if not used.
+        style={RegisterModalCustomStyles}>
+        <Register />
       </Modal>
       {/* <Box>
         <ReactCardFlip
