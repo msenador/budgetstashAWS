@@ -6,60 +6,52 @@ import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-import Fab from '@mui/material/Fab';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Fade from '@mui/material/Fade';
 import { animateScroll as scroll } from 'react-scroll';
 import { Button } from '@mui/material';
-import quotes from '../media/Quotes.json';
-import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import FadeIn from 'react-fade-in';
-import AboutUs from '../components/About/AboutUs';
-import Contact from '../components/Contact';
-import { Icon } from '@iconify/react';
 import Modal from 'react-modal';
 import Login from '../components/Login';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import quotes from '../media/Quotes.json';
+import FadeIn from 'react-fade-in';
 import Register from '../components/Register';
+import Fab from '@mui/material/Fab';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Price from '../components/About/Price';
+import Security from '../components/About/Security';
+import Paperless from '../components/About/Paperless';
+import Easy from '../components/About/Easy';
+import { Icon } from '@iconify/react';
+import ContactUsMobile from './ContactUsMobile';
 
 const Logo = styled.img`
-  height: 130px;
-  margin-left: 50px;
-`;
-
-const HomeVideo = styled.video`
-  object-fit: cover;
-  width: 100%;
-  position: sticky;
-  z-index: -1;
-  margin-top: 17px;
-  box-shadow: 1px 1px 20px -1px grey;
-  height: 600px;
-`;
-
-const CarouselBox = styled(Box)`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 70px;
-`;
-
-const CarouselStyles = styled(Carousel)`
-  .control-dots {
-    margin-bottom: 78px;
-  }
-  .carousel-status {
-    font-size: 0;
-  }
+  margin-top: 50px;
+  height: 125px;
 `;
 
 const Slogan = styled.div`
   display: flex;
+  flex-direction: column;
   width: 100%;
   justify-content: space-around;
   font-size: 35px;
   font-weight: bold;
-  margin-top: -551px;
+  margin-top: -507px;
   position: absolute;
+  height: 300px;
+  text-align: center;
+`;
+
+const CarouselStyles = styled(Carousel)`
+  margin-top: -40px;
+  .control-dots {
+    margin-bottom: 90px;
+  }
+  .carousel-status {
+    font-size: 0;
+  }
 `;
 
 const RegisterBtnPosition = styled.div`
@@ -70,22 +62,41 @@ const RegisterBtnPosition = styled.div`
 `;
 
 const SignupButton = styled.button`
-  margin-top: 74px;
+  margin-top: 180px;
   border-radius: 100px;
   height: 200px;
   width: 200px;
-  background: none;
+  background: white;
   padding: 10px 20px;
   font-size: 16px;
-  color: #fff;
+  color: black;
   outline: none;
-  border: 2px solid #fff;
+  border: 2px dotted black;
   cursor: pointer;
   &:hover {
     background: white;
     transition: 0.3s;
     color: black;
   }
+`;
+
+const AboutUsHeader = styled.h1`
+  text-align: center;
+  font-size: 50px;
+`;
+
+const AboutSmallParagraph = styled.div`
+  text-align: center;
+  font-size: 20px;
+  padding: 30px;
+  margin-top: -35px;
+`;
+
+const ServicesBox = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  padding: 50px;
 `;
 
 const FooterContainer = styled.div`
@@ -148,7 +159,7 @@ ScrollTop.propTypes = {
   window: PropTypes.func
 };
 
-const Home = (props) => {
+const HomeMobile = (props) => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [registerModalOpen, setRegisterModalOpen] = useState(false);
 
@@ -165,7 +176,7 @@ const Home = (props) => {
         </Toolbar>
       </AppBar>
 
-      <CarouselBox>
+      <Box>
         <Logo src="BudgetStash3.png" alt="BudgetStash Logo" />
         <CarouselStyles autoPlay interval={5500} infiniteLoop showThumbs={false}>
           {quotes &&
@@ -178,15 +189,10 @@ const Home = (props) => {
               </Box>
             ))}
         </CarouselStyles>
-      </CarouselBox>
-      <HomeVideo
-        src="./lightBulbHand.mp4"
-        autoPlay={true}
-        loop={true}
-        controls={false}
-        playsInline
-        muted
-        type="video/mp4"
+      </Box>
+
+      <Box
+        style={{ height: '500px', width: '390', backgroundColor: '#5ac8fa', marginTop: '20px' }}
       />
 
       <Slogan data-testid="slogan">
@@ -204,16 +210,28 @@ const Home = (props) => {
       <RegisterBtnPosition>
         <SignupButton onClick={() => setRegisterModalOpen(true)}>Join for free!</SignupButton>
       </RegisterBtnPosition>
-      <Toolbar id="back-to-top-anchor" />
+
       <ScrollTop {...props}>
         <Fab size="small" aria-label="scroll back to top" onClick={() => scroll.scrollToTop()}>
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollTop>
 
-      <AboutUs />
+      <AboutUsHeader>What We Offer</AboutUsHeader>
+      <AboutSmallParagraph>
+        Our team believes in providing free and easy to use services to those who are taking steps
+        to improve their financial stability. Our budgeting services are completely FREE! Donations
+        are welcomed to help our team continue providing free budgeting services.
+      </AboutSmallParagraph>
 
-      <Contact />
+      <ServicesBox>
+        <Price />
+        <Security />
+        <Paperless />
+        <Easy />
+      </ServicesBox>
+
+      <ContactUsMobile />
 
       <FooterContainer>
         <div>
@@ -224,6 +242,7 @@ const Home = (props) => {
           2022
         </div>
       </FooterContainer>
+
       <Modal
         ariaHideApp={false}
         onRequestClose={() => setLoginModalOpen(false)}
@@ -244,4 +263,4 @@ const Home = (props) => {
   );
 };
 
-export default Home;
+export default HomeMobile;

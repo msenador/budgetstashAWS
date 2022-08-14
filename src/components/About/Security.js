@@ -26,7 +26,7 @@ const Security = () => {
   return (
     <ReactCardFlip isFlipped={flip} flipDirection="horizontal">
       <CardContainer style={{ backgroundColor: 'aliceblue' }} key="front">
-        <h1>Guaranteed Security</h1>
+        <h1 style={{ textAlign: 'center' }}>Guaranteed Security</h1>
         <IconStyles icon="fa-solid:user-lock" />
         <Button variant="contained" onClick={handleFlip} style={{ width: '200px', margin: 'auto' }}>
           Learn more
@@ -34,8 +34,8 @@ const Security = () => {
       </CardContainer>
 
       <CardContainer style={{ backgroundColor: 'aliceblue' }} key="back">
-        <h2>Secured by encryption</h2>
-        <div style={{ fontFamily: 'Avenir Next' }}>
+        <h2 style={{ textAlign: 'center' }}>Secured by encryption</h2>
+        <div style={{ fontFamily: 'Avenir Next', textAlign: 'center' }}>
           We offer the best data security to our clients by utilizing AWS security services,
           allowing a safe space for your data to live.
         </div>

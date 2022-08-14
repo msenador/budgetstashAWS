@@ -13,7 +13,7 @@ const Paperless = () => {
   return (
     <ReactCardFlip isFlipped={flip} flipDirection="horizontal">
       <CardContainer style={{ backgroundColor: 'aliceblue' }} key="front">
-        <h1>Paperless</h1>
+        <h1 style={{ textAlign: 'center' }}>Paperless</h1>
         <Icon icon="healthicons:i-documents-denied" style={{ fontSize: '200px', margin: 'auto' }} />
         <Button variant="contained" onClick={handleFlip} style={{ width: '200px', margin: 'auto' }}>
           Learn more
@@ -21,8 +21,8 @@ const Paperless = () => {
       </CardContainer>
 
       <CardContainer style={{ backgroundColor: 'aliceblue' }} key="back">
-        <h2>Save the trees</h2>
-        <div style={{ fontFamily: 'Avenir Next' }}>
+        <h2 style={{ textAlign: 'center' }}>Save the trees</h2>
+        <div style={{ fontFamily: 'Avenir Next', textAlign: 'center' }}>
           Help us save the trees while keeping you organized! Download your budgetary expenses as a
           PDF and save it on your computer for easier storage.
         </div>
