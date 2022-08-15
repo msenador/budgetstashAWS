@@ -29,6 +29,7 @@ import ContactUsMobile from './ContactUsMobile';
 const Logo = styled.img`
   margin-top: 50px;
   height: 110px;
+  padding: 20px;
 `;
 
 const Slogan = styled.div`
