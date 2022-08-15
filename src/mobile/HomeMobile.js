@@ -164,9 +164,7 @@ const HomeMobile = (props) => {
   const [registerModalOpen, setRegisterModalOpen] = useState(false);
 
   const openLoginModal = () => {
-    if (registerModalOpen) {
-      setRegisterModalOpen(false);
-    }
+    setRegisterModalOpen(false);
     setLoginModalOpen(true);
   };
 

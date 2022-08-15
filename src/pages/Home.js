@@ -152,11 +152,16 @@ const Home = (props) => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [registerModalOpen, setRegisterModalOpen] = useState(false);
 
+  const openLoginModal = () => {
+    setRegisterModalOpen(false);
+    setLoginModalOpen(true);
+  };
+
   return (
     <Box>
       <AppBar>
         <Toolbar style={{ display: 'flex', justifyContent: 'space-around' }}>
-          <Button onClick={() => setLoginModalOpen(true)} style={{ color: 'white' }}>
+          <Button onClick={openLoginModal} style={{ color: 'white' }}>
             Login
           </Button>
           <Button style={{ color: 'white' }} onClick={() => scroll.scrollToBottom()}>
