@@ -4,7 +4,7 @@ const UserContext = createContext();
 
 // eslint-disable-next-line react/prop-types
 export const UserProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('userEmail')));
+  const [currentUser, setCurrentUser] = useState([]);
 
   const logoutUser = () => {
     setCurrentUser([]);
