@@ -29,7 +29,6 @@ import ContactUsMobile from './ContactUsMobile';
 const Logo = styled.img`
   margin-top: 50px;
   height: 110px;
-  padding: 20px;
 `;
 
 const Slogan = styled.div`
@@ -164,11 +163,18 @@ const HomeMobile = (props) => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [registerModalOpen, setRegisterModalOpen] = useState(false);
 
+  const openLoginModal = () => {
+    if (registerModalOpen) {
+      setRegisterModalOpen(false);
+    }
+    setLoginModalOpen(true);
+  };
+
   return (
     <Box>
       <AppBar>
         <Toolbar style={{ display: 'flex', justifyContent: 'space-around' }}>
-          <Button onClick={() => setLoginModalOpen(true)} style={{ color: 'white' }}>
+          <Button onClick={openLoginModal} style={{ color: 'white' }}>
             Login
           </Button>
           <Button style={{ color: 'white' }} onClick={() => scroll.scrollToBottom()}>
