@@ -505,7 +505,7 @@ const MemberContent = () => {
               currentUser[currentMonthSelected].map((item, index) => {
                 return (
                   <Box
-                    key={`${item.itemName} - ${item.date}`}
+                    key={`${item.itemName} - ${item.price}`}
                     style={{
                       display: 'flex',
                       justifyContent: 'space-between',

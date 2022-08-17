@@ -7,6 +7,8 @@ import UserContext from './context/UserContext';
 import MemberContent from './pages/MemberContent';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import HomeMobile from './mobile/HomeMobile';
+import MemberContentMobile from './mobile/MemberContentMobile';
+import AppbarMobile from './mobile/AppbarMobile';
 
 const App = () => {
   const matches = useMediaQuery('(min-width:600px)');
@@ -23,11 +25,28 @@ const App = () => {
 
   return (
     <Box>
-      {currentUser.username && <Appbar />}
       <Routes>
         <Route
           path="/"
-          element={currentUser.username ? <MemberContent /> : matches ? <Home /> : <HomeMobile />}
+          element={
+            currentUser.username ? (
+              matches ? (
+                <Box>
+                  <Appbar />
+                  <MemberContent />
+                </Box>
+              ) : (
+                <Box>
+                  <AppbarMobile />
+                  <MemberContentMobile />
+                </Box>
+              )
+            ) : matches ? (
+              <Home />
+            ) : (
+              <HomeMobile />
+            )
+          }
         />
       </Routes>
     </Box>
