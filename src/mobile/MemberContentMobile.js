@@ -448,10 +448,7 @@ const MemberContentMobile = () => {
             <Box>Category</Box>
           </Box>
 
-          <Box
-            style={{
-              width: '90%'
-            }}>
+          <Box>
             {currentUser[currentMonthSelected].length > 0 ? (
               currentUser[currentMonthSelected].map((item, index) => {
                 return (
@@ -493,14 +490,20 @@ const MemberContentMobile = () => {
                         flexDirection: 'column',
                         justifyContent: 'space-between'
                       }}>
-                      <Box>{item.itemName}</Box>
+                      <Box style={{ width: '100px', display: 'flex', justifyContent: 'center' }}>
+                        {item.itemName}
+                      </Box>
                     </Box>
 
-                    <Box style={{ width: '100px' }}>${item.itemPrice}</Box>
+                    <Box style={{ width: '100px', display: 'flex', justifyContent: 'flex-start' }}>
+                      ${item.itemPrice}
+                    </Box>
 
                     <Box style={{ width: '100px' }}>{item.date}</Box>
 
-                    <Box style={{ width: '100px' }}>{item.category}</Box>
+                    <Box style={{ width: '100px', display: 'flex', justifyContent: 'end' }}>
+                      {item.category}
+                    </Box>
                   </Box>
                 );
               })
