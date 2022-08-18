@@ -3,7 +3,6 @@ import { Box } from '@mui/system';
 import React, { useContext, useEffect, useState, useMemo } from 'react';
 import UserContext from '../context/UserContext';
 import { Button, TextField } from '@mui/material';
-import PostAddIcon from '@mui/icons-material/PostAdd';
 import { Line } from 'rc-progress';
 import SpinnerModalContext from '../context/SpinnerModalContext';
 import { PulseLoader } from 'react-spinners';
@@ -399,6 +398,12 @@ const MemberContent = () => {
 
           <hr style={{ marginTop: '20px' }} />
 
+          <Box style={{ fontWeight: '900', display: 'flex', justifyContent: 'space-between' }}>
+            <Box>Category</Box>
+            <Box>%</Box>
+            <Box>Dollar Amount</Box>
+          </Box>
+
           {dataForProgressBars.length > 0 ? (
             <Box
               style={{
@@ -417,7 +422,7 @@ const MemberContent = () => {
                       // eslint-disable-next-line react/jsx-key
                       <Box>
                         <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
-                          <Box style={{ fontWeight: '900' }}>{item.category.toUpperCase()}</Box>
+                          <Box style={{ fontWeight: '700' }}>{item.category.toUpperCase()}</Box>
                           <Box>{((item.total / getMonthlyTotal()) * 100).toFixed(2)}%</Box>
                           <Box>{`($${parseFloat(item.total).toFixed(2)})`}</Box>
                         </Box>
@@ -443,37 +448,43 @@ const MemberContent = () => {
 
         <Box style={{ width: '1000px' }}>
           <Box style={{ display: 'flex', justifyContent: 'center', gap: '5px' }}>
-            <Button variant="contained" color="primary" onClick={handleAddItem}>
-              <PostAddIcon />
-            </Button>
+            <PrimaryBorderTextField
+              id="item-category"
+              label="Category"
+              placeholder="Shopping"
+              value={itemCategory}
+              onChange={(e) => setItemCategory(e.target.value)}
+              onKeyDown={handlePressEnterAddItem}
+            />
             <PrimaryBorderTextField
               id="item-name"
-              label="Item name"
-              placeholder="Name"
+              label="Name"
+              placeholder="Shirt"
               value={itemName}
               onChange={(e) => setItemName(e.target.value)}
               onKeyDown={handlePressEnterAddItem}
             />
-
             <PrimaryBorderTextField
               id="item-price"
-              label="Item price"
-              placeholder="Price"
+              label="Price"
+              placeholder="2.99"
               value={itemPrice}
               onChange={(e) => setItemPrice(e.target.value)}
               onKeyDown={handlePressEnterAddItem}
               type="number"
             />
-
-            <PrimaryBorderTextField
-              id="item-category"
-              label="Item category"
-              placeholder="Category"
-              value={itemCategory}
-              onChange={(e) => setItemCategory(e.target.value)}
-              onKeyDown={handlePressEnterAddItem}
-            />
           </Box>
+
+          <Box style={{ width: '100%', textAlign: 'center', marginTop: '10px' }}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleAddItem}
+              style={{ width: '30%' }}>
+              Add Item
+            </Button>
+          </Box>
+
           <Box
             style={{
               color: 'red',
