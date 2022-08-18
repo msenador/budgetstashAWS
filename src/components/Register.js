@@ -10,6 +10,7 @@ import { AccountCircle } from '@mui/icons-material';
 import BadgeIcon from '@mui/icons-material/Badge';
 import LockIcon from '@mui/icons-material/Lock';
 import SyncLockIcon from '@mui/icons-material/SyncLock';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 const BoxStyled = styled(Box)`
   display: flex;
@@ -40,6 +41,18 @@ const spinnerCustomStyles = {
   }
 };
 
+const registrationSuccessful = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    textAlign: 'center'
+  }
+};
+
 const HRstyles = styled.hr`
   border: 2px solid black;
   width: 80%;
@@ -52,6 +65,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [notification, setNotification] = useState('');
+  const [registrationSuccessfulModalOpen, setRegistrationSuccessfulModalOpen] = useState(false);
 
   const { spinnerModal, setSpinnerModal } = useContext(SpinnerModalContext);
 
@@ -90,6 +104,7 @@ const Register = () => {
           case 200:
             setNotification('Registration Successful!');
             setSpinnerModal(false);
+            setRegistrationSuccessfulModalOpen(true);
             break;
         }
       })
@@ -172,6 +187,17 @@ const Register = () => {
         onAfterClose={() => setSpinnerModal(false)} //NEED THIS. Messes up logout if not used.
         style={spinnerCustomStyles}>
         <PulseLoader color={MAIN_BLUE} />
+      </Modal>
+
+      <Modal
+        ariaHideApp={false}
+        isOpen={registrationSuccessfulModalOpen}
+        onAfterClose={() => setRegistrationSuccessfulModalOpen(false)} //NEED THIS. Messes up logout if not used.
+        style={registrationSuccessful}>
+        <Box>
+          <Box>Registration Successful!</Box>
+          <CheckCircleOutlineIcon color="green" />
+        </Box>
       </Modal>
     </Box>
   );

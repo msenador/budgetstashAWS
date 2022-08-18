@@ -311,6 +311,10 @@ const MemberContentMobile = () => {
     }
   };
 
+  React.useEffect(() => {
+    setNotification('');
+  }, [currentMonthSelected]);
+
   return (
     <Box>
       <Box style={{ textAlign: 'center' }}>
