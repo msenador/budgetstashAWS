@@ -314,7 +314,7 @@ const MemberContentMobile = () => {
   return (
     <Box>
       <Box style={{ textAlign: 'center' }}>
-        <Box fontStyle="italic" marginTop={2}>
+        <Box fontStyle="italic" marginTop={2} fontWeight="700">
           Choose Month
         </Box>
         <Box marginTop={1}>
@@ -340,6 +340,9 @@ const MemberContentMobile = () => {
 
       <hr style={{ width: '80%' }} />
 
+      <Box fontStyle="italic" marginTop={2} fontWeight="700" style={{ textAlign: 'center' }}>
+        Enter New Item
+      </Box>
       <Box style={{ display: 'flex', justifyContent: 'center', gap: '5px', padding: '20px' }}>
         <PrimaryBorderTextField
           id="item-category"

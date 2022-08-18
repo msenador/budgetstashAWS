@@ -447,6 +447,9 @@ const MemberContent = () => {
         </Box>
 
         <Box style={{ width: '1000px' }}>
+          <Box fontStyle="italic" marginTop={2} fontWeight="700" style={{ textAlign: 'center' }}>
+            Enter New Item
+          </Box>
           <Box style={{ display: 'flex', justifyContent: 'center', gap: '5px' }}>
             <PrimaryBorderTextField
               id="item-category"
@@ -507,7 +510,7 @@ const MemberContent = () => {
 
           <Box
             style={{
-              height: '465px',
+              height: '370px',
               overflowY: 'auto',
               overflowX: 'auto',
               border: '2px inset'
