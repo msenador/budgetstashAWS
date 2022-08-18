@@ -12,6 +12,8 @@ import ListItemText from '@mui/material/ListItemText';
 import UserContext from '../context/UserContext';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Modal from 'react-modal';
+import LogoutIcon from '@mui/icons-material/Logout';
+import PhoneIcon from '@mui/icons-material/Phone';
 
 const LogoutModalCustomStyles = {
   content: {
@@ -54,17 +56,17 @@ const AppbarMobile = () => {
       <Box style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
         <Button onClick={handleAccountSettings} style={{ margin: '5px 0px' }}>
           <AccountCircleIcon />
-          <ListItemText primary={'Account Settings'} />
+          <ListItemText primary={'Account Settings'} style={{ marginLeft: '15px' }} />
         </Button>
 
         <Button onClick={handleContacUs} style={{ margin: '5px 0px' }}>
-          <AccountCircleIcon />
-          <ListItemText primary={'Contact Us'} />
+          <PhoneIcon />
+          <ListItemText primary={'Contact Us'} style={{ marginLeft: '15px' }} />
         </Button>
 
         <Button onClick={() => setLogoutModalOpen(true)} style={{ margin: '5px 0px' }}>
-          <AccountCircleIcon />
-          <ListItemText primary={'Logout'} />
+          <LogoutIcon />
+          <ListItemText primary={'Logout'} style={{ marginLeft: '15px' }} />
         </Button>
       </Box>
     </Box>
