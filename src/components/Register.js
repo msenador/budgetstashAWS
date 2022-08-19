@@ -70,8 +70,49 @@ const Register = ({ openLoginModal }) => {
 
   const { spinnerModal, setSpinnerModal } = useContext(SpinnerModalContext);
 
+  const validateEmailFormat = (email) => {
+    const splitEmail = email.split('');
+    if (!splitEmail.includes('@')) {
+      setNotification('Invalid email');
+      setSpinnerModal(false);
+      return true;
+    }
+  };
+
+  const passwordsDoNotMatch = (password, confirmPassword) => {
+    if (password !== confirmPassword) {
+      setNotification('Passwords do not match');
+      setSpinnerModal(false);
+      return true;
+    }
+  };
+
+  const passwordDidNotPassRegex = (password) => {
+    // 1 lowercase, 1 uppercase, 1 number, 1 special character, at least 8 chars long
+    const strongRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})');
+    if (!strongRegex.test(password)) {
+      setNotification(
+        'Password must have at least: 1 lowercase letter, 1 uppercase letter, 1 number, 1 special character and be 8 characters long'
+      );
+      setSpinnerModal(false);
+      return true;
+    }
+  };
+
   const submitRegistration = () => {
     setSpinnerModal(true);
+
+    if (validateEmailFormat(email)) {
+      return;
+    }
+
+    if (passwordsDoNotMatch(password, confirmPassword)) {
+      return;
+    }
+
+    if (passwordDidNotPassRegex(password)) {
+      return;
+    }
 
     const requestBody = {
       email: email,
