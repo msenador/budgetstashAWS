@@ -70,16 +70,18 @@ const RegisterBtnPosition = styled.div`
 `;
 
 const SignupButton = styled.button`
+  background-image: -webkit-linear-gradient(283deg, rgba(255, 255, 255, 0.1) 50%, transparent 55%),
+    -webkit-linear-gradient(top, rgba(255, 255, 255, 0.15), transparent);
+  border: 5px inset;
   margin-top: 74px;
   border-radius: 100px;
   height: 200px;
   width: 200px;
-  background: none;
+  background-color: darkorange;
   padding: 10px 20px;
   font-size: 16px;
-  color: #fff;
+  color: black;
   outline: none;
-  border: 2px solid #fff;
   cursor: pointer;
   &:hover {
     background: white;

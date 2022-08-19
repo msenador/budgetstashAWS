@@ -47,7 +47,7 @@ const Slogan = styled.div`
 const CarouselStyles = styled(Carousel)`
   margin-top: -40px;
   .control-dots {
-    margin-bottom: 90px;
+    margin-bottom: 2px;
   }
   .carousel-status {
     font-size: 0;
@@ -62,16 +62,18 @@ const RegisterBtnPosition = styled.div`
 `;
 
 const SignupButton = styled.button`
+  background-color: darkorange;
+  background-image: -webkit-linear-gradient(283deg, rgba(255, 255, 255, 0.1) 50%, transparent 55%),
+    -webkit-linear-gradient(top, rgba(255, 255, 255, 0.15), transparent);
+  border: 5px inset;
   margin-top: 180px;
   border-radius: 100px;
   height: 200px;
   width: 200px;
-  background: white;
   padding: 10px 20px;
   font-size: 16px;
   color: black;
   outline: none;
-  border: 2px dotted black;
   cursor: pointer;
   &:hover {
     background: white;
@@ -186,7 +188,7 @@ const HomeMobile = (props) => {
         <CarouselStyles autoPlay interval={5500} infiniteLoop showThumbs={false}>
           {quotes &&
             quotes.map((quote, i) => (
-              <Box style={{ marginTop: '45px' }} key={i}>
+              <Box style={{ marginTop: '45px', height: '115px' }} key={i}>
                 <Box style={{ fontWeight: '500', fontStyle: 'italic', fontSize: '20px' }}>
                   {quote.quote}
                 </Box>
@@ -197,7 +199,13 @@ const HomeMobile = (props) => {
       </Box>
 
       <Box
-        style={{ height: '500px', width: '390', backgroundColor: '#5ac8fa', marginTop: '20px' }}
+        style={{
+          height: '500px',
+          width: '390',
+          backgroundColor: '#5ac8fa',
+          marginTop: '16px',
+          boxShadow: '1px 1px 20px -1px grey'
+        }}
       />
 
       <Slogan data-testid="slogan">
