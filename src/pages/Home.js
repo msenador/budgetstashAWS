@@ -66,7 +66,7 @@ const RegisterBtnPosition = styled.div`
   width: 100%;
   text-align: center;
   position: absolute;
-  margin-top: -400px;
+  margin-top: -500px;
 `;
 
 const SignupButton = styled.button`
@@ -83,6 +83,7 @@ const SignupButton = styled.button`
   color: black;
   outline: none;
   cursor: pointer;
+  margin-left: 60px;
   &:hover {
     background: white;
     transition: 0.3s;
