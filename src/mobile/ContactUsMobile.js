@@ -1,6 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-// import emailjs from '@emailjs/browser';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -91,41 +90,59 @@ const ToastStyledContainer = styled(ToastContainer)`
 `;
 
 const Contact = () => {
+  const [email, setEmail] = useState('');
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
+
   const notify = () => toast('Email sent!', { position: toast.POSITION.BOTTOM_RIGHT });
   const failEmailSent = () =>
     toast('Failed to send email', { position: toast.POSITION.BOTTOM_RIGHT });
-  const form = useRef(null);
 
-  const sendEmail = (e) => {
-    e.preventDefault();
-    let customerEmail = form.current.customerEmail.value;
-    let emailSubject = form.current.emailSubject.value;
-    let message = form.current.message.value;
-
-    if (!customerEmail || !customerEmail.includes('@') || !emailSubject || !message) {
+  const emptyFields = (email, subject, message) => {
+    if (!email || !subject || !message) {
       failEmailSent();
-    } else if (customerEmail && emailSubject && message) {
-      notify();
+      return true;
+    }
+  };
+
+  const validateEmailFormat = (email) => {
+    const splitEmail = email.split('');
+    if (!splitEmail.includes('@')) {
+      failEmailSent();
+      return true;
+    }
+  };
+
+  const sendEmail = () => {
+    if (emptyFields(email, subject, message)) {
+      console.log('hit emptyFields');
+      return;
     }
 
-    // SENDS EMAILS - COMMENTED OUT on purpose
-    // emailjs
-    //   .sendForm(
-    //     "service_1iy93ml",
-    //     "template_xyptqb9",
-    //     form.current,
-    //     "user_e3T93vvxc8HW0qDwv0GLU"
-    //   )
-    //   .then(
-    //     (result) => {
-    //       console.log(result.text);
-    //       notify();
-    //     },
-    //     (error) => {
-    //       console.log(error.text);
-    //       failEmailSent();
-    //     }
-    //   );
+    if (validateEmailFormat(email)) {
+      console.log('hit validateEmailFormat');
+      return;
+    }
+
+    const requestBody = {
+      email: email,
+      subject: subject,
+      message: message
+    };
+
+    console.log('HERE');
+    fetch('https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/contact-us', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': 'O7a8DXIjpl5e2hWDOt9jQ32PU2ve37G1aLWQvzvB'
+      },
+      body: JSON.stringify(requestBody)
+    }).catch((err) => {
+      console.log(err);
+    });
+
+    notify();
   };
 
   return (
@@ -154,15 +171,29 @@ const Contact = () => {
         <div style={{ fontSize: '15px', marginBottom: '20px', color: 'gray' }}>
           i.e. partnerships, questions, general support
         </div>
-        <form ref={form}>
-          <InputPositions>
-            <InputStyles placeholder="Email" name="customerEmail" />
-            <InputStyles placeholder="Subject" name="emailSubject" />
-            <TextAreaStyles style={{ height: '100px' }} placeholder="Message" name="message" />
-            <SendBtn onClick={sendEmail}>SEND</SendBtn>
-            <ToastStyledContainer />
-          </InputPositions>
-        </form>
+        <InputPositions>
+          <InputStyles
+            placeholder="Email"
+            name="customerEmail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <InputStyles
+            placeholder="Subject"
+            name="emailSubject"
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+          />
+          <TextAreaStyles
+            style={{ height: '100px' }}
+            placeholder="Message"
+            name="message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+          <SendBtn onClick={sendEmail}>SEND</SendBtn>
+          <ToastStyledContainer />
+        </InputPositions>
       </ContactUsStyles>
     </Container>
   );
