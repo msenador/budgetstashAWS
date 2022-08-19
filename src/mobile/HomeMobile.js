@@ -47,6 +47,7 @@ const Slogan = styled.div`
 const CarouselStyles = styled(Carousel)`
   margin-top: -40px;
   .control-dots {
+    z-index: -1;
     margin-bottom: 2px;
   }
   .carousel-status {

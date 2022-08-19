@@ -200,6 +200,7 @@ const Register = ({ openLoginModal }) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onKeyDown={handlePressEnter}
+            type="password"
           />
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'flex-end', margin: 'auto' }}>
@@ -212,6 +213,7 @@ const Register = ({ openLoginModal }) => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             onKeyDown={handlePressEnter}
+            type="password"
           />
         </Box>
         <Button
