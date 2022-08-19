@@ -31,4 +31,6 @@ yarn-error.log*
 /aws/add-item-lambda/node_modules
 /aws/delete-item-lambda/*.zip
 /aws/delete-item-lambda/node_modules
+/aws/contactus-email-lambda/*.zip
+/aws/contactus-email-lambda/node_modules
 

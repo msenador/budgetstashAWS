@@ -15,10 +15,17 @@ exports.handler = async (event) => {
 };
 
 const addForm = async (email, subject, message) => {
+  const today = new Date();
+  const dateEST = new Date(today.getTime() + -240 * 60 * 1000);
+  const dateToString = dateEST.toString();
+  const splitDateToString = dateToString.split('');
+  const realEST = splitDateToString.slice(0, 24).join('');
+
   const user = {
     email: email,
     subject: subject,
-    message: message
+    message: message,
+    timestamp: realEST
   };
 
   const params = {
@@ -26,7 +33,8 @@ const addForm = async (email, subject, message) => {
     Item: {
       email: { S: user.email },
       subject: { S: user.subject },
-      message: { S: user.message }
+      message: { S: user.message },
+      timestamp: { S: user.timestamp }
     }
   };
 
