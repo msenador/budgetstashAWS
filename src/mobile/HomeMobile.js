@@ -262,7 +262,7 @@ const HomeMobile = (props) => {
         isOpen={registerModalOpen}
         onAfterClose={() => setRegisterModalOpen(false)} //NEED THIS. Messes up logout if not used.
         style={RegisterModalCustomStyles}>
-        <Register />
+        <Register openLoginModal={openLoginModal} />
       </Modal>
     </Box>
   );

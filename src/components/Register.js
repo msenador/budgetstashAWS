@@ -59,7 +59,8 @@ const HRstyles = styled.hr`
   margin-top: -20px;
 `;
 
-const Register = () => {
+// eslint-disable-next-line react/prop-types
+const Register = ({ openLoginModal }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -194,9 +195,16 @@ const Register = () => {
         isOpen={registrationSuccessfulModalOpen}
         onAfterClose={() => setRegistrationSuccessfulModalOpen(false)} //NEED THIS. Messes up logout if not used.
         style={registrationSuccessful}>
-        <Box>
-          <Box>Registration Successful!</Box>
-          <CheckCircleOutlineIcon color="green" />
+        <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <h1>Registration Successful</h1>
+          <CheckCircleOutlineIcon color="success" fontSize="large" />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={openLoginModal}
+            style={{ marginTop: '10px' }}>
+            Login now!
+          </Button>
         </Box>
       </Modal>
     </Box>
