@@ -3,12 +3,6 @@ const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient({ region: process.env.AWS_MY_REGION });
 const dynamoDBtable = process.env.DYNAMODB_TABLE;
 
-const today = new Date();
-const day = today.getDate(); // 24
-const month = today.getMonth(); // 10 (Month is 0-based, so 10 means 11th Month)
-const hours = today.getHours(); // 15 (0-23)
-const minutes = today.getMinutes(); // 20 (0-59)
-
 exports.handler = async (event) => {
   console.log(event);
   const body = JSON.parse(event.body);
@@ -29,11 +23,7 @@ exports.handler = async (event) => {
     body.itemPrice,
     body.category,
     body.email,
-    body.monthSelected,
-    month,
-    day,
-    hours,
-    minutes
+    body.monthSelected
   );
 };
 
@@ -44,6 +34,7 @@ const missingInputs = (itemName, itemPrice, category) => {
 };
 
 const addItem = async (itemName, itemPrice, category, email, monthSelected) => {
+  const today = new Date();
   const dateEST = new Date(today.getTime() + -240 * 60 * 1000);
   const dateToString = dateEST.toString();
   const splitDateToString = dateToString.split('');
@@ -86,8 +77,6 @@ const addItem = async (itemName, itemPrice, category, email, monthSelected) => {
       KeyConditionExpression: '#email = :emailValue'
     })
     .promise();
-
-  console.log('RES: ', response);
 
   return {
     statusCode: 200,
