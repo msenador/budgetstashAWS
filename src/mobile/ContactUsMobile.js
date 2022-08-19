@@ -115,12 +115,10 @@ const Contact = () => {
 
   const sendEmail = () => {
     if (emptyFields(email, subject, message)) {
-      console.log('hit emptyFields');
       return;
     }
 
     if (validateEmailFormat(email)) {
-      console.log('hit validateEmailFormat');
       return;
     }
 
@@ -130,7 +128,6 @@ const Contact = () => {
       message: message
     };
 
-    console.log('HERE');
     fetch('https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/contact-us', {
       method: 'POST',
       headers: {
