@@ -32,7 +32,6 @@ const HomeVideo = styled.video`
   width: 100%;
   position: sticky;
   z-index: -1;
-  margin-top: 17px;
   box-shadow: 1px 1px 20px -1px grey;
   height: 600px;
 `;
@@ -111,7 +110,7 @@ const LoginModalCustomStyles = {
     transform: 'translate(-50%, -50%)',
     borderRadius: '50px',
     textAlign: 'center',
-    height: '300px'
+    height: '400px'
   }
 };
 
@@ -187,6 +186,13 @@ const Home = (props) => {
             ))}
         </CarouselStyles>
       </CarouselBox>
+
+      <Box style={{ textAlign: 'center', padding: '20px' }}>
+        <Button variant="contained" onClick={() => openLoginModal()}>
+          Explore DEMO now
+        </Button>
+      </Box>
+
       <HomeVideo
         src="./lightBulbHand.mp4"
         autoPlay={true}

@@ -122,7 +122,7 @@ const LoginModalCustomStyles = {
     transform: 'translate(-50%, -50%)',
     borderRadius: '50px',
     textAlign: 'center',
-    height: '300px'
+    height: '400px'
   }
 };
 
@@ -197,6 +197,12 @@ const HomeMobile = (props) => {
               </Box>
             ))}
         </CarouselStyles>
+      </Box>
+
+      <Box style={{ textAlign: 'center', padding: '20px' }}>
+        <Button variant="contained" onClick={openLoginModal}>
+          Explore DEMO now
+        </Button>
       </Box>
 
       <Box

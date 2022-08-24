@@ -140,6 +140,11 @@ const Login = () => {
         Login
       </Button>
       {notification && <div style={{ color: '#E24E1B' }}>*{notification}</div>}
+      <Box style={{ textAling: 'center', marginTop: '15px' }}>Demo login credentials:</Box>
+      <Box style={{ color: 'gray', marginTop: '5px' }}>
+        <Box>Email: demo@budgetstash.com</Box>
+        <Box>Password: Demo123!</Box>
+      </Box>
       <Modal ariaHideApp={false} isOpen={spinnerModal} style={spinnerCustomStyles}>
         <PulseLoader color={MAIN_BLUE} />
       </Modal>
