@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Box from '@mui/material/Box';
 // import emailjs from '@emailjs/browser';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -143,7 +144,7 @@ const Contact = () => {
       message: message
     };
 
-    fetch('https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/contact-us', {
+    fetch('https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/contact', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -204,6 +205,9 @@ const Contact = () => {
             onChange={(e) => setMessage(e.target.value)}
           />
           <SendBtn onClick={sendEmail}>SEND</SendBtn>
+          <Box style={{ color: 'gray', fontSize: '15px' }}>
+            **Please allow our team at least 24 hours to respond.
+          </Box>
           <ToastStyledContainer />
         </InputPositions>
       </ContactUsStyles>
