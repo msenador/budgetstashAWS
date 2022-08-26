@@ -11,7 +11,7 @@ const Container = styled.div`
   justify-items: center;
   grid-template-columns: 3fr;
   row-gap: 50px;
-  height: 900px;
+  height: 1000px;
 `;
 
 const MissionStatementStyles = styled.div`

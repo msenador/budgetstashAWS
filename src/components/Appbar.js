@@ -211,7 +211,7 @@ export default function MiniDrawer() {
         isOpen={logoutModalOpen}
         onAfterClose={() => setLogoutModalOpen(false)}
         style={LogoutModalCustomStyles}>
-        <Box style={{ display: 'flex', flexDirection: 'column' }}>
+        <Box style={{ display: 'flex', flexDirection: 'column', zIndex: '99' }}>
           <Box>
             <h2>Are you sure you want to logout?</h2>
           </Box>

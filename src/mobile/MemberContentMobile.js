@@ -20,6 +20,7 @@ import Modal from 'react-modal';
 import { MAIN_BLUE } from '../theme';
 
 const PrimaryBorderTextField = styled(TextField)`
+  z-index: 0;
   & label.Mui-focused {
     color: #344966;
   }
@@ -396,7 +397,10 @@ const MemberContentMobile = () => {
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header">
-          <Typography>Total spent: ${parseFloat(getMonthlyTotal()).toFixed(2)}</Typography>
+          <Typography>
+            Total spent:{' '}
+            <span style={{ fontWeight: '600' }}>${parseFloat(getMonthlyTotal()).toFixed(2)}</span>
+          </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Box style={{ fontWeight: '900', display: 'flex', justifyContent: 'space-between' }}>
