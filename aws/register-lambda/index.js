@@ -1,5 +1,6 @@
 const AWS = require('aws-sdk');
 const bcrypt = require('bcryptjs');
+const SES = new AWS.SES();
 
 AWS.config.update({
   region: process.env.AWS_MY_REGION
@@ -119,6 +120,21 @@ const addUser = async (username, email, password) => {
       }
     })
     .promise();
+
+  const emailParams = {
+    Destination: {
+      ToAddresses: [process.env.BUDGETSTASH_EMAIL]
+    },
+    Message: {
+      Body: {
+        Text: { Data: `Username: ${user.username}\n\nUser Email: ${user.email}` }
+      },
+      Subject: { Data: `New user just registered!` }
+    },
+    Source: process.env.BUDGETSTASH_EMAIL
+  };
+
+  await SES.sendEmail(emailParams).promise();
 
   const response = {
     statusCode: 200,
