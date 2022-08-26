@@ -24,7 +24,7 @@ const ContactUsStyles = styled.div`
   font-size: 25px;
   color: white;
   width: 80%;
-  margin-top: -190px;
+  margin-top: -260px;
 `;
 
 const InputPositions = styled.div`
@@ -72,7 +72,7 @@ const SendBtn = styled.button`
 const MobileHRLine = styled.hr`
   -webkit-transform: rotate(90deg);
   height: 330px;
-  margin-top: -150px;
+  margin-top: -195px;
 `;
 
 const ToastStyledContainer = styled(ToastContainer)`
@@ -162,7 +162,7 @@ const Contact = () => {
             fontStyle: 'italic',
             fontSize: '15px',
             float: 'right',
-            marginTop: '10px'
+            marginTop: '35px'
           }}>
           - Morian Senador, Founder
         </div>
