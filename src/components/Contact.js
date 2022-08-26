@@ -156,6 +156,10 @@ const Contact = () => {
     });
 
     notify();
+
+    setEmail('');
+    setSubject('');
+    setMessage('');
   };
 
   return (

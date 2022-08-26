@@ -129,7 +129,7 @@ const Contact = () => {
       message: message
     };
 
-    fetch('https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/contact-us', {
+    fetch('https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/contact', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -141,6 +141,10 @@ const Contact = () => {
     });
 
     notify();
+
+    setEmail('');
+    setSubject('');
+    setMessage('');
   };
 
   return (
