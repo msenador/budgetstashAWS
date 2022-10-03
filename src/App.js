@@ -9,9 +9,11 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import HomeMobile from './mobile/HomeMobile';
 import MemberContentMobile from './mobile/MemberContentMobile';
 import AppbarMobile from './mobile/AppbarMobile';
+import AccountSettings from './components/AccountSettings';
+import AccountSettingsMobile from './mobile/AccountSettingsMobile';
 
 const App = () => {
-  const matches = useMediaQuery('(min-width:600px)');
+  const mobile = useMediaQuery('(min-width:600px)');
   const { currentUser, setCurrentUser } = useContext(UserContext);
 
   useEffect(() => {
@@ -30,7 +32,7 @@ const App = () => {
           path="/"
           element={
             currentUser.username ? (
-              matches ? (
+              mobile ? (
                 <Box>
                   <Appbar />
                   <MemberContent />
@@ -41,7 +43,30 @@ const App = () => {
                   <MemberContentMobile />
                 </Box>
               )
-            ) : matches ? (
+            ) : mobile ? (
+              <Home />
+            ) : (
+              <HomeMobile />
+            )
+          }
+        />
+
+        <Route
+          path="/account-settings"
+          element={
+            currentUser.username ? (
+              mobile ? (
+                <Box>
+                  <Appbar />
+                  <AccountSettings />
+                </Box>
+              ) : (
+                <Box>
+                  <AppbarMobile />
+                  <AccountSettingsMobile />
+                </Box>
+              )
+            ) : mobile ? (
               <Home />
             ) : (
               <HomeMobile />

@@ -163,10 +163,13 @@ const Home = (props) => {
     <Box>
       <AppBar>
         <Toolbar style={{ display: 'flex', justifyContent: 'space-around' }}>
-          <Button onClick={openLoginModal} style={{ color: 'white' }}>
+          <Button onClick={openLoginModal} style={{ color: 'white' }} data-testid="login-btn">
             Login
           </Button>
-          <Button style={{ color: 'white' }} onClick={() => scroll.scrollToBottom()}>
+          <Button
+            style={{ color: 'white' }}
+            onClick={() => scroll.scrollToBottom()}
+            data-testid="contactUs-btn">
             Contact Us
           </Button>
         </Toolbar>
@@ -188,8 +191,8 @@ const Home = (props) => {
       </CarouselBox>
 
       <Box style={{ textAlign: 'center', padding: '20px' }}>
-        <Button variant="contained" onClick={() => openLoginModal()}>
-          Explore DEMO now
+        <Button variant="contained" onClick={() => openLoginModal()} data-testid="demo-btn">
+          EXPLORE DEMO NOW
         </Button>
       </Box>
 
