@@ -301,7 +301,7 @@ const MemberContent = () => {
 
       switch (res.status) {
         case 200:
-          setNotification('Item Delete');
+          setNotification('Item Deleted');
           setSpinnerModal(false);
       }
 
