@@ -195,8 +195,8 @@ const MemberContent = () => {
 
   const handleForbiddenWords = () => {
     if (currentUser.email === 'demo@budgetstash.com') {
-      let itemNameLowerCase = itemName.toLowerCase();
-      let itemCategoryLowerCase = itemCategory.toLowerCase();
+      let itemNameLowerCase = itemName.replace(/\s/g, '').toLowerCase();
+      let itemCategoryLowerCase = itemCategory.replace(/\s/g, '').toLowerCase();
       if (
         forbiddenWords.includes(itemNameLowerCase) ||
         forbiddenWords.includes(itemCategoryLowerCase)
