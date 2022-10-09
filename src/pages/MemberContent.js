@@ -8,6 +8,7 @@ import SpinnerModalContext from '../context/SpinnerModalContext';
 import { PulseLoader } from 'react-spinners';
 import Modal from 'react-modal';
 import { MAIN_BLUE } from '../theme';
+import { forbiddenWords } from '../forbiddenWords';
 
 const PrimaryBorderTextField = styled(TextField)`
   & label.Mui-focused {
@@ -192,8 +193,42 @@ const MemberContent = () => {
     }
   };
 
+  const handleForbiddenWords = () => {
+    if (currentUser.email === 'demo@budgetstash.com') {
+      let itemNameLowerCase = itemName.toLowerCase();
+      let itemCategoryLowerCase = itemCategory.toLowerCase();
+      if (
+        forbiddenWords.includes(itemNameLowerCase) ||
+        forbiddenWords.includes(itemCategoryLowerCase)
+      ) {
+        return true;
+      }
+    }
+  };
+
+  const handleLimitInputChars = () => {
+    let splitItemNameInput = itemName.split('');
+    let splitItemCategoryInput = itemCategory.split('');
+
+    if (splitItemNameInput.length > 15 || splitItemCategoryInput.length > 15) {
+      return true;
+    }
+  };
+
   const handleAddItem = async () => {
     setSpinnerModal(true);
+
+    if (handleForbiddenWords() === true) {
+      setNotification('Item Name/Category includes profanity - Not allowed in demo account.');
+      setSpinnerModal(false);
+      return;
+    }
+
+    if (handleLimitInputChars()) {
+      setNotification('Item Name/Category max of 15 characters');
+      setSpinnerModal(false);
+      return;
+    }
 
     if (!itemPrice || !itemName || !itemCategory) {
       setNotification('All fields are required');

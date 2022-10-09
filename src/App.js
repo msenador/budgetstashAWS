@@ -18,7 +18,7 @@ const App = () => {
 
   useEffect(() => {
     if (currentUser) {
-      // localStorage.setItem('userEmail', JSON.stringify(currentUser));
+      localStorage.setItem('userEmail', JSON.stringify(currentUser));
       setCurrentUser(currentUser);
     } else {
       setCurrentUser([]);
