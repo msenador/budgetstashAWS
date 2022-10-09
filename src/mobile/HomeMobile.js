@@ -20,7 +20,7 @@ import Register from '../components/Register';
 import Fab from '@mui/material/Fab';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Price from '../components/About/Price';
-import Security from '../components/About/Security';
+import CustomerSatisfaction from '../components/About/CustomerSatisfaction';
 import Paperless from '../components/About/Paperless';
 import Easy from '../components/About/Easy';
 import { Icon } from '@iconify/react';
@@ -246,7 +246,7 @@ const HomeMobile = (props) => {
 
       <ServicesBox>
         <Price />
-        <Security />
+        <CustomerSatisfaction />
         <Paperless />
         <Easy />
       </ServicesBox>

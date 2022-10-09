@@ -16,7 +16,7 @@ const IconStyles = styled(Icon)`
   }
 `;
 
-const Security = () => {
+const CustomerSatisfaction = () => {
   const [flip, setFlip] = useState(false);
 
   const handleFlip = () => {
@@ -26,18 +26,19 @@ const Security = () => {
   return (
     <ReactCardFlip isFlipped={flip} flipDirection="horizontal">
       <CardContainer style={{ backgroundColor: 'aliceblue' }} key="front">
-        <h1 style={{ textAlign: 'center' }}>Guaranteed Security</h1>
-        <IconStyles icon="fa-solid:user-lock" />
+        <h1 style={{ textAlign: 'center' }}>Customer Satisfaction</h1>
+        <IconStyles icon="fa6-solid:people-group" />
         <Button variant="contained" onClick={handleFlip} style={{ width: '200px', margin: 'auto' }}>
           Learn more
         </Button>
       </CardContainer>
 
       <CardContainer style={{ backgroundColor: 'aliceblue' }} key="back">
-        <h2 style={{ textAlign: 'center' }}>Secured by encryption</h2>
+        <h2 style={{ textAlign: 'center' }}>We are here for you</h2>
         <div style={{ fontFamily: 'Avenir Next', textAlign: 'center' }}>
-          We offer the best data security to our clients by utilizing AWS security services,
-          allowing a safe space for your data to live.
+          Our team is dedicated to providing our customers the best experience. Contact us to let us
+          know how we can make your experience better! You have needs, and we have a contact form -
+          USE IT!
         </div>
         <Button variant="contained" onClick={handleFlip} style={{ width: '200px', margin: 'auto' }}>
           Back
@@ -47,4 +48,4 @@ const Security = () => {
   );
 };
 
-export default Security;
+export default CustomerSatisfaction;

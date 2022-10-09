@@ -8,7 +8,7 @@ const Easy = () => {
   const [flip, setFlip] = useState(false);
 
   const description =
-    "Don't worry! Our easy to use interface is user friendly on desktops, tablets, and mobile devices!";
+    "Don't worry! Our easy to use interface is user friendly on desktops and mobile devices!";
 
   const handleFlip = () => {
     setFlip(!flip);

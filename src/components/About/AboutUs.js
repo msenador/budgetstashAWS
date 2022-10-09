@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Price from './Price';
-import Security from './Security';
+import CustomerSatisfaction from './CustomerSatisfaction';
 import Easy from './Easy';
 import Paperless from './Paperless';
 
@@ -63,7 +63,7 @@ const AboutUs = () => {
       <div>
         <Content>
           <Price />
-          <Security />
+          <CustomerSatisfaction />
           <Paperless />
           <Easy />
         </Content>
