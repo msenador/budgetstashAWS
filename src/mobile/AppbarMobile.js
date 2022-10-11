@@ -11,9 +11,11 @@ import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import UserContext from '../context/UserContext';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import HomeIcon from '@mui/icons-material/Home';
 import Modal from 'react-modal';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PhoneIcon from '@mui/icons-material/Phone';
+import { useNavigate } from 'react-router-dom';
 
 const LogoutModalCustomStyles = {
   content: {
@@ -27,6 +29,7 @@ const LogoutModalCustomStyles = {
 };
 
 const AppbarMobile = () => {
+  const navigate = useNavigate();
   const { currentUser, logoutUser } = React.useContext(UserContext);
 
   const [logoutModalOpen, setLogoutModalOpen] = React.useState(false);
@@ -45,6 +48,21 @@ const AppbarMobile = () => {
     setState({ ...state, [anchor]: open });
   };
 
+  const routeAccountSettingsMobile = () => {
+    let path = `/account-settings`;
+    navigate(path);
+  };
+
+  const routeContactUs = () => {
+    let path = `/contactus`;
+    navigate(path);
+  };
+
+  const routeHomeMobile = () => {
+    let path = `/`;
+    navigate(path);
+  };
+
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
@@ -54,12 +72,17 @@ const AppbarMobile = () => {
       <img src="BudgetStash3.png" width="80%" />
       <Divider />
       <Box style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-        <Button onClick={handleAccountSettings} style={{ margin: '5px 0px' }}>
+        <Button onClick={routeHomeMobile} style={{ margin: '5px 0px' }}>
+          <HomeIcon />
+          <ListItemText primary={'Home'} style={{ marginLeft: '15px' }} />
+        </Button>
+
+        <Button onClick={routeAccountSettingsMobile} style={{ margin: '5px 0px' }}>
           <AccountCircleIcon />
           <ListItemText primary={'Account Settings'} style={{ marginLeft: '15px' }} />
         </Button>
 
-        <Button onClick={handleContacUs} style={{ margin: '5px 0px' }}>
+        <Button onClick={routeContactUs} style={{ margin: '5px 0px' }}>
           <PhoneIcon />
           <ListItemText primary={'Contact Us'} style={{ marginLeft: '15px' }} />
         </Button>
@@ -71,14 +94,6 @@ const AppbarMobile = () => {
       </Box>
     </Box>
   );
-
-  const handleAccountSettings = () => {
-    // console.log('ACCOUNT SEETTINGS ONLY');
-  };
-
-  const handleContacUs = () => {
-    //
-  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>

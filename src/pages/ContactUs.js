@@ -1,12 +1,12 @@
 import React from 'react';
 import { Box } from '@mui/system';
 
-const AccountSettings = () => {
+const ContactUs = () => {
   return (
     <Box padding={'100px'}>
-      <div>AccountSettings</div>
+      <div>ContactUs</div>
     </Box>
   );
 };
 
-export default AccountSettings;
+export default ContactUs;

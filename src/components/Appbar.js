@@ -22,6 +22,8 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Button } from '@mui/material';
 import Modal from 'react-modal';
+import { useNavigate } from 'react-router-dom';
+import HomeIcon from '@mui/icons-material/Home';
 
 const LogoutModalCustomStyles = {
   content: {
@@ -102,6 +104,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function MiniDrawer() {
+  const navigate = useNavigate();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [logoutModalOpen, setLogoutModalOpen] = React.useState(false);
@@ -113,6 +116,21 @@ export default function MiniDrawer() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const routeAccountSettings = () => {
+    let path = `/account-settings`;
+    navigate(path);
+  };
+
+  const routeContactUs = () => {
+    let path = `/contactus`;
+    navigate(path);
+  };
+
+  const routeHomeMobile = () => {
+    let path = `/`;
+    navigate(path);
   };
 
   return (
@@ -147,6 +165,27 @@ export default function MiniDrawer() {
         <List style={{ background: 'aliceblue' }}>
           <ListItem disablePadding sx={{ display: 'block' }}>
             <ListItemButton
+              onClick={routeHomeMobile}
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? 'initial' : 'center',
+                px: 2.5
+              }}>
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : 'auto',
+                  justifyContent: 'center'
+                }}>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Home'} sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem disablePadding sx={{ display: 'block' }}>
+            <ListItemButton
+              onClick={routeAccountSettings}
               sx={{
                 minHeight: 48,
                 justifyContent: open ? 'initial' : 'center',
@@ -166,6 +205,7 @@ export default function MiniDrawer() {
 
           <ListItem disablePadding sx={{ display: 'block' }}>
             <ListItemButton
+              onClick={routeContactUs}
               sx={{
                 minHeight: 48,
                 justifyContent: open ? 'initial' : 'center',

@@ -11,6 +11,8 @@ import MemberContentMobile from './mobile/MemberContentMobile';
 import AppbarMobile from './mobile/AppbarMobile';
 import AccountSettings from './components/AccountSettings';
 import AccountSettingsMobile from './mobile/AccountSettingsMobile';
+import ContactUs from './pages/ContactUs';
+import ContactUsPageMobile from './mobile/ContactUsPageMobile';
 
 const App = () => {
   const mobile = useMediaQuery('(min-width:600px)');
@@ -64,6 +66,29 @@ const App = () => {
                 <Box>
                   <AppbarMobile />
                   <AccountSettingsMobile />
+                </Box>
+              )
+            ) : mobile ? (
+              <Home />
+            ) : (
+              <HomeMobile />
+            )
+          }
+        />
+
+        <Route
+          path="/contactus"
+          element={
+            currentUser.username ? (
+              mobile ? (
+                <Box>
+                  <Appbar />
+                  <ContactUs />
+                </Box>
+              ) : (
+                <Box>
+                  <AppbarMobile />
+                  <ContactUsPageMobile />
                 </Box>
               )
             ) : mobile ? (
