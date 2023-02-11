@@ -11,6 +11,7 @@ import BadgeIcon from '@mui/icons-material/Badge';
 import LockIcon from '@mui/icons-material/Lock';
 import SyncLockIcon from '@mui/icons-material/SyncLock';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { API_REGISTRATION, KEY_REGISTRATION } from '../config';
 
 const BoxStyled = styled(Box)`
   display: flex;
@@ -121,11 +122,11 @@ const Register = ({ openLoginModal }) => {
       confirmPassword: confirmPassword
     };
 
-    fetch('https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/register', {
+    fetch(API_REGISTRATION, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': 'O7a8DXIjpl5e2hWDOt9jQ32PU2ve37G1aLWQvzvB'
+        'x-api-key': KEY_REGISTRATION
       },
       body: JSON.stringify(requestBody)
     })
