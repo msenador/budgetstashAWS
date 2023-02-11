@@ -11,6 +11,9 @@
 # production
 /build
 
+# configuration
+config.js
+
 # misc
 .DS_Store
 .env.local
@@ -33,4 +36,6 @@ yarn-error.log*
 /aws/delete-item-lambda/node_modules
 /aws/send-email-lambda/*.zip
 /aws/send-email-lambda/node_modules
+
+
 
