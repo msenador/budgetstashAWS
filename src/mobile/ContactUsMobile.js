@@ -129,20 +129,11 @@ const Contact = () => {
       subject: subject,
       message: message
     };
-
-<<<<<<< Updated upstream
-    fetch('https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/contact', {
+    fetch(Aprocess.env.REACT_APP_API_CUSTOMER_SEND_EMAIL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': 'O7a8DXIjpl5e2hWDOt9jQ32PU2ve37G1aLWQvzvB'
-=======
-    fetch(API_CUSTOMER_SEND_EMAIL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': KEY_CUSTOMER_SEND_EMAIL
->>>>>>> Stashed changes
+        'x-api-key': process.env.REACT_APP_KEY_CUSTOMER_SEND_EMAIL
       },
       body: JSON.stringify(requestBody)
     }).catch((err) => {

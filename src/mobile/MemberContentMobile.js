@@ -237,29 +237,14 @@ const MemberContentMobile = () => {
     };
 
     try {
-<<<<<<< Updated upstream
-      const res = await fetch(
-        'https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/delete-item',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': 'tERGwOFDPqasKeo78uWbw3T5AOWKUmVm4sS8DT0W'
-          },
-          body: JSON.stringify(requestBody)
-        }
-      );
-=======
-      const res = await fetch(API_DELETE_ITEM, {
+      const res = await fetch(process.env.REACT_APP_API_DELETE_ITEM, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': KEY_DELETE_ITEM
+          'x-api-key': process.env.REACT_APP_KEY_DELETE_ITEM
         },
         body: JSON.stringify(requestBody)
       });
->>>>>>> Stashed changes
-
       switch (res.status) {
         case 200:
           setNotification('Item Deleted');
@@ -326,28 +311,14 @@ const MemberContentMobile = () => {
     };
 
     try {
-<<<<<<< Updated upstream
-      const res = await fetch(
-        'https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/add-item',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': 'gYwr5Yk46k65h34MZelISaJU1NijMJkZ98l0CI0j'
-          },
-          body: JSON.stringify(requestBody)
-        }
-      );
-=======
-      const res = await fetch(API_ADD_ITEM, {
+      const res = await fetch(process.env.REACT_APP_API_ADD_ITEM, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': KEY_ADD_ITEM
+          'x-api-key': process.env.REACT_APP_KEY_ADD_ITEM
         },
         body: JSON.stringify(requestBody)
       });
->>>>>>> Stashed changes
 
       switch (res.status) {
         case 400:

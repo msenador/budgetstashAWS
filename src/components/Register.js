@@ -122,6 +122,7 @@ const Register = ({ openLoginModal }) => {
       confirmPassword: confirmPassword
     };
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     fetch('https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/register', {
       method: 'POST',
@@ -135,6 +136,13 @@ const Register = ({ openLoginModal }) => {
         'Content-Type': 'application/json',
         'x-api-key': KEY_REGISTRATION
 >>>>>>> Stashed changes
+=======
+    fetch(process.env.REACT_APP_API_REGISTRATION, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.REACT_APP_KEY_REGISTRATION
+>>>>>>> e9dc5c84031675e346d11805df5d06e3e3283afc
       },
       body: JSON.stringify(requestBody)
     })
