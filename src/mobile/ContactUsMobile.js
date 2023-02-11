@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Box from '@mui/material/Box';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { API_CUSTOMER_SEND_EMAIL, KEY_CUSTOMER_SEND_EMAIL } from '../config';
 
 const Container = styled.div`
   background-color: #344966;
@@ -129,11 +130,19 @@ const Contact = () => {
       message: message
     };
 
+<<<<<<< Updated upstream
     fetch('https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/contact', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': 'O7a8DXIjpl5e2hWDOt9jQ32PU2ve37G1aLWQvzvB'
+=======
+    fetch(API_CUSTOMER_SEND_EMAIL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': KEY_CUSTOMER_SEND_EMAIL
+>>>>>>> Stashed changes
       },
       body: JSON.stringify(requestBody)
     }).catch((err) => {

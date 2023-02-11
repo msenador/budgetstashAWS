@@ -9,6 +9,7 @@ import { PulseLoader } from 'react-spinners';
 import Modal from 'react-modal';
 import { MAIN_BLUE } from '../theme';
 import { forbiddenWords } from '../forbiddenWords';
+import { API_ADD_ITEM, API_DELETE_ITEM, KEY_ADD_ITEM, KEY_DELETE_ITEM } from '../config';
 
 const PrimaryBorderTextField = styled(TextField)`
   & label.Mui-focused {
@@ -245,6 +246,7 @@ const MemberContent = () => {
     };
 
     try {
+<<<<<<< Updated upstream
       const res = await fetch(
         'https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/add-item',
         {
@@ -256,6 +258,16 @@ const MemberContent = () => {
           body: JSON.stringify(requestBody)
         }
       );
+=======
+      const res = await fetch(API_ADD_ITEM, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': KEY_ADD_ITEM
+        },
+        body: JSON.stringify(requestBody)
+      });
+>>>>>>> Stashed changes
 
       switch (res.status) {
         case 400:
@@ -287,6 +299,7 @@ const MemberContent = () => {
     };
 
     try {
+<<<<<<< Updated upstream
       const res = await fetch(
         'https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/delete-item',
         {
@@ -298,6 +311,16 @@ const MemberContent = () => {
           body: JSON.stringify(requestBody)
         }
       );
+=======
+      const res = await fetch(API_DELETE_ITEM, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': KEY_DELETE_ITEM
+        },
+        body: JSON.stringify(requestBody)
+      });
+>>>>>>> Stashed changes
 
       switch (res.status) {
         case 200:
