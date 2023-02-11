@@ -9,6 +9,7 @@ import { PulseLoader } from 'react-spinners';
 import Modal from 'react-modal';
 import { MAIN_BLUE } from '../theme';
 import { forbiddenWords } from '../forbiddenWords';
+import { API_ADD_ITEM, API_DELETE_ITEM, KEY_ADD_ITEM, KEY_DELETE_ITEM } from '../config';
 
 const PrimaryBorderTextField = styled(TextField)`
   & label.Mui-focused {
@@ -245,17 +246,14 @@ const MemberContent = () => {
     };
 
     try {
-      const res = await fetch(
-        'https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/add-item',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': 'gYwr5Yk46k65h34MZelISaJU1NijMJkZ98l0CI0j'
-          },
-          body: JSON.stringify(requestBody)
-        }
-      );
+      const res = await fetch(process.env.REACT_APP_API_ADD_ITEM, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': process.env.REACT_APP_KEY_ADD_ITEM
+        },
+        body: JSON.stringify(requestBody)
+      });
 
       switch (res.status) {
         case 400:
@@ -287,18 +285,14 @@ const MemberContent = () => {
     };
 
     try {
-      const res = await fetch(
-        'https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/delete-item',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': 'tERGwOFDPqasKeo78uWbw3T5AOWKUmVm4sS8DT0W'
-          },
-          body: JSON.stringify(requestBody)
-        }
-      );
-
+      const res = await fetch(process.env.REACT_APP_API_DELETE_ITEM, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': process.env.REACT_APP_KEY_DELETE_ITEM
+        },
+        body: JSON.stringify(requestBody)
+      });
       switch (res.status) {
         case 200:
           setNotification('Item Deleted');
@@ -493,7 +487,7 @@ const MemberContent = () => {
               value={itemCategory}
               onChange={(e) => setItemCategory(e.target.value)}
               onKeyDown={handlePressEnterAddItem}
-              style={{ zIndex: '-1' }}
+              style={{ zIndex: '-1' }} // Need this so it doesn't show over logout modal
             />
             <PrimaryBorderTextField
               id="item-name"
