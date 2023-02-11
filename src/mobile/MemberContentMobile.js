@@ -390,6 +390,7 @@ const MemberContentMobile = () => {
           placeholder="Shopping"
           value={itemCategory}
           onChange={(e) => setItemCategory(e.target.value)}
+          style={{ zIndex: '-1' }}
         />
         <PrimaryBorderTextField
           id="item-name"
@@ -397,6 +398,7 @@ const MemberContentMobile = () => {
           placeholder="Shirt"
           value={itemName}
           onChange={(e) => setItemName(e.target.value)}
+          style={{ zIndex: '-1' }}
         />
         <PrimaryBorderTextField
           id="item-price"
@@ -405,6 +407,7 @@ const MemberContentMobile = () => {
           value={itemPrice}
           onChange={(e) => setItemPrice(e.target.value)}
           type="number"
+          style={{ zIndex: '-1' }}
         />
       </Box>
       <Box style={{ width: '100%', textAlign: 'center' }}>

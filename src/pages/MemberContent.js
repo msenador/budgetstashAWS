@@ -493,6 +493,7 @@ const MemberContent = () => {
               value={itemCategory}
               onChange={(e) => setItemCategory(e.target.value)}
               onKeyDown={handlePressEnterAddItem}
+              style={{ zIndex: '-1' }}
             />
             <PrimaryBorderTextField
               id="item-name"
@@ -501,6 +502,7 @@ const MemberContent = () => {
               value={itemName}
               onChange={(e) => setItemName(e.target.value)}
               onKeyDown={handlePressEnterAddItem}
+              style={{ zIndex: '-1' }}
             />
             <PrimaryBorderTextField
               id="item-price"
@@ -510,6 +512,7 @@ const MemberContent = () => {
               onChange={(e) => setItemPrice(e.target.value)}
               onKeyDown={handlePressEnterAddItem}
               type="number"
+              style={{ zIndex: '-1' }}
             />
           </Box>
 
