@@ -19,6 +19,12 @@ import { PulseLoader } from 'react-spinners';
 import Modal from 'react-modal';
 import { MAIN_BLUE } from '../theme';
 import { forbiddenWords } from '../forbiddenWords';
+import {
+  REACT_APP_API_ADD_ITEM,
+  REACT_APP_API_DELETE_ITEM,
+  REACT_APP_KEY_ADD_ITEM,
+  REACT_APP_KEY_DELETE_ITEM
+} from '../config';
 
 const PrimaryBorderTextField = styled(TextField)`
   z-index: 0;
@@ -236,17 +242,14 @@ const MemberContentMobile = () => {
     };
 
     try {
-      const res = await fetch(
-        'https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/delete-item',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': 'tERGwOFDPqasKeo78uWbw3T5AOWKUmVm4sS8DT0W'
-          },
-          body: JSON.stringify(requestBody)
-        }
-      );
+      const res = await fetch(REACT_APP_API_DELETE_ITEM, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': REACT_APP_KEY_DELETE_ITEM
+        },
+        body: JSON.stringify(requestBody)
+      });
 
       switch (res.status) {
         case 200:
@@ -314,17 +317,14 @@ const MemberContentMobile = () => {
     };
 
     try {
-      const res = await fetch(
-        'https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/add-item',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': 'gYwr5Yk46k65h34MZelISaJU1NijMJkZ98l0CI0j'
-          },
-          body: JSON.stringify(requestBody)
-        }
-      );
+      const res = await fetch(REACT_APP_API_ADD_ITEM, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': REACT_APP_KEY_ADD_ITEM
+        },
+        body: JSON.stringify(requestBody)
+      });
 
       switch (res.status) {
         case 400:
@@ -390,7 +390,6 @@ const MemberContentMobile = () => {
           placeholder="Shopping"
           value={itemCategory}
           onChange={(e) => setItemCategory(e.target.value)}
-          style={{ zIndex: '-1' }}
         />
         <PrimaryBorderTextField
           id="item-name"
@@ -398,7 +397,6 @@ const MemberContentMobile = () => {
           placeholder="Shirt"
           value={itemName}
           onChange={(e) => setItemName(e.target.value)}
-          style={{ zIndex: '-1' }}
         />
         <PrimaryBorderTextField
           id="item-price"
@@ -407,7 +405,6 @@ const MemberContentMobile = () => {
           value={itemPrice}
           onChange={(e) => setItemPrice(e.target.value)}
           type="number"
-          style={{ zIndex: '-1' }}
         />
       </Box>
       <Box style={{ width: '100%', textAlign: 'center' }}>

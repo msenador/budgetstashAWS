@@ -9,6 +9,12 @@ import { PulseLoader } from 'react-spinners';
 import Modal from 'react-modal';
 import { MAIN_BLUE } from '../theme';
 import { forbiddenWords } from '../forbiddenWords';
+import {
+  REACT_APP_API_ADD_ITEM,
+  REACT_APP_API_DELETE_ITEM,
+  REACT_APP_KEY_ADD_ITEM,
+  REACT_APP_KEY_DELETE_ITEM
+} from '../config';
 
 const PrimaryBorderTextField = styled(TextField)`
   & label.Mui-focused {
@@ -245,17 +251,14 @@ const MemberContent = () => {
     };
 
     try {
-      const res = await fetch(
-        'https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/add-item',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': 'gYwr5Yk46k65h34MZelISaJU1NijMJkZ98l0CI0j'
-          },
-          body: JSON.stringify(requestBody)
-        }
-      );
+      const res = await fetch(REACT_APP_API_ADD_ITEM, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': REACT_APP_KEY_ADD_ITEM
+        },
+        body: JSON.stringify(requestBody)
+      });
 
       switch (res.status) {
         case 400:
@@ -287,17 +290,14 @@ const MemberContent = () => {
     };
 
     try {
-      const res = await fetch(
-        'https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/delete-item',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': 'tERGwOFDPqasKeo78uWbw3T5AOWKUmVm4sS8DT0W'
-          },
-          body: JSON.stringify(requestBody)
-        }
-      );
+      const res = await fetch(REACT_APP_API_DELETE_ITEM, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': REACT_APP_KEY_DELETE_ITEM
+        },
+        body: JSON.stringify(requestBody)
+      });
 
       switch (res.status) {
         case 200:
@@ -493,7 +493,6 @@ const MemberContent = () => {
               value={itemCategory}
               onChange={(e) => setItemCategory(e.target.value)}
               onKeyDown={handlePressEnterAddItem}
-              style={{ zIndex: '-1' }} // Need this so that inputs do not show when logout modal is active.
             />
             <PrimaryBorderTextField
               id="item-name"
@@ -502,7 +501,6 @@ const MemberContent = () => {
               value={itemName}
               onChange={(e) => setItemName(e.target.value)}
               onKeyDown={handlePressEnterAddItem}
-              style={{ zIndex: '-1' }}
             />
             <PrimaryBorderTextField
               id="item-price"
@@ -512,7 +510,6 @@ const MemberContent = () => {
               onChange={(e) => setItemPrice(e.target.value)}
               onKeyDown={handlePressEnterAddItem}
               type="number"
-              style={{ zIndex: '-1' }}
             />
           </Box>
 
