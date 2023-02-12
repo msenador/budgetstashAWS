@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 // import emailjs from '@emailjs/browser';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { REACT_APP_API_CUSTOMER_SEND_EMAIL, REACT_APP_KEY_CUSTOMER_SEND_EMAIL } from '../config';
 
 const Container = styled.div`
   margin-top: 100px;
@@ -144,11 +145,11 @@ const Contact = () => {
       message: message
     };
 
-    fetch('https://80uthhqr2j.execute-api.us-east-1.amazonaws.com/prod/contact', {
+    fetch(REACT_APP_API_CUSTOMER_SEND_EMAIL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': 'O7a8DXIjpl5e2hWDOt9jQ32PU2ve37G1aLWQvzvB'
+        'x-api-key': REACT_APP_KEY_CUSTOMER_SEND_EMAIL
       },
       body: JSON.stringify(requestBody)
     }).catch((err) => {
