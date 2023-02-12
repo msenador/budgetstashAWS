@@ -19,12 +19,6 @@ import { PulseLoader } from 'react-spinners';
 import Modal from 'react-modal';
 import { MAIN_BLUE } from '../theme';
 import { forbiddenWords } from '../forbiddenWords';
-import {
-  REACT_APP_API_ADD_ITEM,
-  REACT_APP_API_DELETE_ITEM,
-  REACT_APP_KEY_ADD_ITEM,
-  REACT_APP_KEY_DELETE_ITEM
-} from '../config';
 
 const PrimaryBorderTextField = styled(TextField)`
   z-index: 0;
@@ -242,11 +236,13 @@ const MemberContentMobile = () => {
     };
 
     try {
-      const res = await fetch(REACT_APP_API_DELETE_ITEM, {
+      // eslint-disable-next-line no-undef
+      const res = await fetch(process.env.REACT_APP_API_DELETE_ITEM, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': REACT_APP_KEY_DELETE_ITEM
+          // eslint-disable-next-line no-undef
+          'x-api-key': process.env.REACT_APP_KEY_DELETE_ITEM
         },
         body: JSON.stringify(requestBody)
       });
@@ -317,11 +313,13 @@ const MemberContentMobile = () => {
     };
 
     try {
-      const res = await fetch(REACT_APP_API_ADD_ITEM, {
+      // eslint-disable-next-line no-undef
+      const res = await fetch(process.env.REACT_APP_API_ADD_ITEM, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': REACT_APP_KEY_ADD_ITEM
+          // eslint-disable-next-line no-undef
+          'x-api-key': process.env.REACT_APP_KEY_ADD_ITEM
         },
         body: JSON.stringify(requestBody)
       });

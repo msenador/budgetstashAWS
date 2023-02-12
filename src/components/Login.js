@@ -9,7 +9,6 @@ import SpinnerModalContext from '../context/SpinnerModalContext';
 import { MAIN_BLUE } from '../theme';
 import { AccountCircle } from '@mui/icons-material';
 import LockIcon from '@mui/icons-material/Lock';
-import { REACT_APP_API_LOGIN, REACT_APP_KEY_LOGIN } from '../config';
 
 const BoxStyled = styled(Box)`
   display: flex;
@@ -69,11 +68,13 @@ const Login = () => {
     };
 
     try {
-      const res = await fetch(REACT_APP_API_LOGIN, {
+      // eslint-disable-next-line no-undef
+      const res = await fetch(process.env.REACT_APP_API_LOGIN, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': REACT_APP_KEY_LOGIN
+          // eslint-disable-next-line no-undef
+          'x-api-key': process.env.REACT_APP_KEY_LOGIN
         },
         body: JSON.stringify(requestBody)
       });

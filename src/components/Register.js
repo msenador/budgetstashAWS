@@ -11,7 +11,6 @@ import BadgeIcon from '@mui/icons-material/Badge';
 import LockIcon from '@mui/icons-material/Lock';
 import SyncLockIcon from '@mui/icons-material/SyncLock';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import { REACT_APP_API_REGISTRATION, REACT_APP_KEY_REGISTRATION } from '../config';
 
 const BoxStyled = styled(Box)`
   display: flex;
@@ -121,12 +120,13 @@ const Register = ({ openLoginModal }) => {
       password: password,
       confirmPassword: confirmPassword
     };
-
-    fetch(REACT_APP_API_REGISTRATION, {
+    // eslint-disable-next-line no-undef
+    fetch(process.env.REACT_APP_API_REGISTRATION, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': REACT_APP_KEY_REGISTRATION
+        // eslint-disable-next-line no-undef
+        'x-api-key': process.env.REACT_APP_KEY_REGISTRATION
       },
       body: JSON.stringify(requestBody)
     })
