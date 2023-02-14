@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import Box from '@mui/material/Box';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { REACT_APP_API_CUSTOMER_SEND_EMAIL, REACT_APP_KEY_CUSTOMER_SEND_EMAIL } from '../config';
+import { getEnvironment } from '../globalHelpers.js/getEnvironment';
 
 const Container = styled.div`
   background-color: #344966;
@@ -129,16 +131,25 @@ const Contact = () => {
       message: message
     };
 
-    // eslint-disable-next-line no-undef
-    fetch(process.env.REACT_APP_API_CUSTOMER_SEND_EMAIL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    fetch(
+      getEnvironment(
         // eslint-disable-next-line no-undef
-        'x-api-key': process.env.REACT_APP_KEY_CUSTOMER_SEND_EMAIL
-      },
-      body: JSON.stringify(requestBody)
-    }).catch((err) => {
+        process.env.REACT_APP_API_CUSTOMER_SEND_EMAIL,
+        REACT_APP_API_CUSTOMER_SEND_EMAIL
+      ),
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': getEnvironment(
+            // eslint-disable-next-line no-undef
+            process.env.REACT_APP_KEY_CUSTOMER_SEND_EMAIL,
+            REACT_APP_KEY_CUSTOMER_SEND_EMAIL
+          )
+        },
+        body: JSON.stringify(requestBody)
+      }
+    ).catch((err) => {
       console.log(err);
     });
 

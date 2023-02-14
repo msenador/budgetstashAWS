@@ -12,13 +12,19 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Line } from 'rc-progress';
 import { Button, TextField } from '@mui/material';
 import styled from 'styled-components';
-
 import UserContext from '../context/UserContext';
 import SpinnerModalContext from '../context/SpinnerModalContext';
 import { PulseLoader } from 'react-spinners';
 import Modal from 'react-modal';
 import { MAIN_BLUE } from '../theme';
 import { forbiddenWords } from '../forbiddenWords';
+import {
+  REACT_APP_API_ADD_ITEM,
+  REACT_APP_API_DELETE_ITEM,
+  REACT_APP_KEY_ADD_ITEM,
+  REACT_APP_KEY_DELETE_ITEM
+} from '../config';
+import { getEnvironment } from '../globalHelpers.js/getEnvironment';
 
 const PrimaryBorderTextField = styled(TextField)`
   z-index: 0;
@@ -236,16 +242,22 @@ const MemberContentMobile = () => {
     };
 
     try {
-      // eslint-disable-next-line no-undef
-      const res = await fetch(process.env.REACT_APP_API_DELETE_ITEM, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line no-undef
-          'x-api-key': process.env.REACT_APP_KEY_DELETE_ITEM
-        },
-        body: JSON.stringify(requestBody)
-      });
+      const res = await fetch(
+        // eslint-disable-next-line no-undef
+        getEnvironment(process.env.REACT_APP_API_DELETE_ITEM, REACT_APP_API_DELETE_ITEM),
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': getEnvironment(
+              // eslint-disable-next-line no-undef
+              process.env.REACT_APP_KEY_DELETE_ITEM,
+              REACT_APP_KEY_DELETE_ITEM
+            )
+          },
+          body: JSON.stringify(requestBody)
+        }
+      );
 
       switch (res.status) {
         case 200:
@@ -313,16 +325,20 @@ const MemberContentMobile = () => {
     };
 
     try {
-      // eslint-disable-next-line no-undef
-      const res = await fetch(process.env.REACT_APP_API_ADD_ITEM, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          // eslint-disable-next-line no-undef
-          'x-api-key': process.env.REACT_APP_KEY_ADD_ITEM
-        },
-        body: JSON.stringify(requestBody)
-      });
+      const res = await fetch(
+        // eslint-disable-next-line no-undef
+        getEnvironment(process.env.REACT_APP_API_ADD_ITEM, REACT_APP_API_ADD_ITEM),
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key':
+              // eslint-disable-next-line no-undef
+              getEnvironment(process.env.REACT_APP_KEY_ADD_ITEM, REACT_APP_KEY_ADD_ITEM)
+          },
+          body: JSON.stringify(requestBody)
+        }
+      );
 
       switch (res.status) {
         case 400:
