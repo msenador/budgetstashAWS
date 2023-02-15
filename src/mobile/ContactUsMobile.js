@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Box from '@mui/material/Box';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { REACT_APP_API_CUSTOMER_SEND_EMAIL, REACT_APP_KEY_CUSTOMER_SEND_EMAIL } from '../config';
 import { getEnvironment } from '../globalHelpers.js/getEnvironment';
 
 const Container = styled.div`

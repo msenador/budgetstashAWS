@@ -9,7 +9,6 @@ import SpinnerModalContext from '../context/SpinnerModalContext';
 import { MAIN_BLUE } from '../theme';
 import { AccountCircle } from '@mui/icons-material';
 import LockIcon from '@mui/icons-material/Lock';
-import { REACT_APP_API_LOGIN, REACT_APP_KEY_LOGIN } from '../config';
 import { getEnvironment } from '../globalHelpers.js/getEnvironment';
 
 const BoxStyled = styled(Box)`

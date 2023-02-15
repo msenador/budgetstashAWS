@@ -18,12 +18,6 @@ import { PulseLoader } from 'react-spinners';
 import Modal from 'react-modal';
 import { MAIN_BLUE } from '../theme';
 import { forbiddenWords } from '../forbiddenWords';
-import {
-  REACT_APP_API_ADD_ITEM,
-  REACT_APP_API_DELETE_ITEM,
-  REACT_APP_KEY_ADD_ITEM,
-  REACT_APP_KEY_DELETE_ITEM
-} from '../config';
 import { getEnvironment } from '../globalHelpers.js/getEnvironment';
 
 const PrimaryBorderTextField = styled(TextField)`
