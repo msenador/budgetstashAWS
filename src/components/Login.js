@@ -70,7 +70,7 @@ const Login = () => {
     try {
       const res = await fetch(
         // eslint-disable-next-line no-undef
-        process.env.REACT_APP_API_LOGIN
+        process.env.REACT_APP_API_LOGIN,
         {
           method: 'POST',
           headers: {
