@@ -155,7 +155,7 @@ const Contact = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': getEnv(
+          'x-api-key': getEnvironment(
             // eslint-disable-next-line no-undef
             process.env.REACT_APP_KEY_CUSTOMER_SEND_EMAIL,
             REACT_APP_KEY_CUSTOMER_SEND_EMAIL
