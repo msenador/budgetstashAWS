@@ -11,7 +11,7 @@ import BadgeIcon from '@mui/icons-material/Badge';
 import LockIcon from '@mui/icons-material/Lock';
 import SyncLockIcon from '@mui/icons-material/SyncLock';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import { getEnvironment } from '../globalHelpers.js/getEnvironment';
+import { getEnvironment } from '../globalHelpers/getEnvironment';
 
 const BoxStyled = styled(Box)`
   display: flex;

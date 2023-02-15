@@ -9,7 +9,7 @@ import SpinnerModalContext from '../context/SpinnerModalContext';
 import { MAIN_BLUE } from '../theme';
 import { AccountCircle } from '@mui/icons-material';
 import LockIcon from '@mui/icons-material/Lock';
-import { getEnvironment } from '../globalHelpers.js/getEnvironment';
+import { getEnvironment } from '../globalHelpers/getEnvironment';
 
 const BoxStyled = styled(Box)`
   display: flex;

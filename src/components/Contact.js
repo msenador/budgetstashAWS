@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 // import emailjs from '@emailjs/browser';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getEnvironment } from '../globalHelpers.js/getEnvironment';
+import { getEnvironment } from '../globalHelpers/getEnvironment';
 
 const Container = styled.div`
   margin-top: 100px;

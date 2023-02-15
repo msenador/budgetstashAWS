@@ -18,7 +18,7 @@ import { PulseLoader } from 'react-spinners';
 import Modal from 'react-modal';
 import { MAIN_BLUE } from '../theme';
 import { forbiddenWords } from '../forbiddenWords';
-import { getEnvironment } from '../globalHelpers.js/getEnvironment';
+import { getEnvironment } from '../globalHelpers/getEnvironment';
 
 const PrimaryBorderTextField = styled(TextField)`
   z-index: 0;

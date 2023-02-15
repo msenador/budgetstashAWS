@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Box from '@mui/material/Box';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getEnvironment } from '../globalHelpers.js/getEnvironment';
+import { getEnvironment } from '../globalHelpers/getEnvironment';
 
 const Container = styled.div`
   background-color: #344966;
