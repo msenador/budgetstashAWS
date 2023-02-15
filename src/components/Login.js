@@ -9,7 +9,6 @@ import SpinnerModalContext from '../context/SpinnerModalContext';
 import { MAIN_BLUE } from '../theme';
 import { AccountCircle } from '@mui/icons-material';
 import LockIcon from '@mui/icons-material/Lock';
-import { getEnvironment } from '../globalHelpers/getEnvironment';
 
 const BoxStyled = styled(Box)`
   display: flex;
@@ -71,13 +70,13 @@ const Login = () => {
     try {
       const res = await fetch(
         // eslint-disable-next-line no-undef
-        getEnvironment(process.env.REACT_APP_API_LOGIN, REACT_APP_API_LOGIN),
+        process.env.REACT_APP_API_LOGIN
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             // eslint-disable-next-line no-undef
-            'x-api-key': getEnvironment(process.env.REACT_APP_KEY_LOGIN, REACT_APP_KEY_LOGIN)
+            'x-api-key': process.env.REACT_APP_KEY_LOGIN
           },
           body: JSON.stringify(requestBody)
         }
