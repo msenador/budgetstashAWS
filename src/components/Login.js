@@ -63,9 +63,11 @@ const Login = () => {
     setSpinnerModal(true);
 
     const requestBody = {
-      email: email,
+      email: email.toLowerCase(),
       password: password
     };
+
+    console.log('REQ: ', requestBody);
 
     try {
       const res = await fetch(

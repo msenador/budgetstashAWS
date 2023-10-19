@@ -102,7 +102,7 @@ const Register = ({ openLoginModal }) => {
   const submitRegistration = () => {
     setSpinnerModal(true);
 
-    if (validateEmailFormat(email)) {
+    if (validateEmailFormat(email.toLowerCase())) {
       return;
     }
 
@@ -115,7 +115,7 @@ const Register = ({ openLoginModal }) => {
     }
 
     const requestBody = {
-      email: email,
+      email: email.toLowerCase(),
       username: username,
       password: password,
       confirmPassword: confirmPassword
